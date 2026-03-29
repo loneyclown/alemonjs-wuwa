@@ -1,4 +1,4 @@
-import type { AccountBaseInfo, AnnDetailResp, AnnListResp, BatchRoleCostResp, CalabashResp, DailyData, ExploreResp, GachaLogItem, KuroApiResp, KuroRole, MineV2Resp, MoreActivityResp, OnlineRole, OwnedRoleInfo, PeriodDetailResp, PeriodListResp, RoleDetailResp, RoleListResp, SignInitResp, TowerResp } from './types';
+import type { AccountBaseInfo, AnnDetailResp, AnnListResp, BatchRoleCostResp, CalabashResp, DailyData, ExploreResp, GachaLogItem, KuroApiResp, KuroRole, MineV2Resp, MoreActivityResp, OnlineRole, OwnedRoleInfoResp, PeriodDetailResp, PeriodListResp, RoleDetailResp, RoleListResp, SignInitResp, TowerResp, WikiHomeResp } from './types';
 export declare function apiLogin(mobile: string, code: string, did: string): Promise<KuroApiResp<{
     token: string;
 }>>;
@@ -21,6 +21,7 @@ export declare function apiMatrixDetail(uid: string, token: string): Promise<Kur
 export declare function apiRoleDetail(uid: string, token: string, roleId: number): Promise<KuroApiResp<RoleDetailResp>>;
 export declare function apiCalabashData(uid: string, token: string): Promise<KuroApiResp<CalabashResp>>;
 export declare function apiMineV2(token: string): Promise<KuroApiResp<MineV2Resp>>;
+export declare function apiWikiHome(): Promise<KuroApiResp<WikiHomeResp>>;
 export declare function apiAnnList(eventType?: string, pageSize?: number): Promise<KuroApiResp<AnnListResp>>;
 export declare function apiAnnDetail(postId: string): Promise<KuroApiResp<AnnDetailResp>>;
 export declare function apiGachaLog(uid: string, cardPoolType: string, recordId?: string): Promise<{
@@ -37,7 +38,7 @@ export declare function apiPeriodList(uid: string, token: string): Promise<{
 export declare function apiPeriodDetail(uid: string, token: string, type: 'month' | 'week' | 'version', period: number): Promise<KuroApiResp<PeriodDetailResp>>;
 export declare function apiCalcRefresh(uid: string, token: string): Promise<KuroApiResp<unknown>>;
 export declare function apiOnlineRoleList(token: string): Promise<KuroApiResp<OnlineRole[]>>;
-export declare function apiOwnedRoleInfo(uid: string, token: string): Promise<KuroApiResp<OwnedRoleInfo[]>>;
+export declare function apiOwnedRoleInfo(uid: string, token: string): Promise<KuroApiResp<OwnedRoleInfoResp>>;
 export declare function apiBatchRoleCost(uid: string, token: string, content: unknown[]): Promise<KuroApiResp<BatchRoleCostResp>>;
 export declare function apiMoreActivity(uid: string, token: string): Promise<KuroApiResp<MoreActivityResp>>;
 export declare function apiWikiTree(catalogueId: string): Promise<KuroApiResp<unknown>>;

@@ -5,6 +5,7 @@ export declare const routeRules: {
     readonly token: RegExp;
     readonly stamina: RegExp;
     readonly roleinfo: RegExp;
+    readonly chardetail: RegExp;
     readonly explore: RegExp;
     readonly sign: RegExp;
     readonly tower: RegExp;

@@ -3,6 +3,7 @@ import React from 'react';
 interface AnnCardProps {
     data: {
         activities: AnnItem[];
+        infos: AnnItem[];
         notices: AnnItem[];
     };
 }

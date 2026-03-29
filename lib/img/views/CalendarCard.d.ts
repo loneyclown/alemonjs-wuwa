@@ -1,10 +1,12 @@
 import React from 'react';
 interface CalendarEvent {
     title: string;
-    startTime: string;
-    endTime: string;
-    type: string;
+    type: 'gacha' | 'tower' | 'activity';
+    dateRange?: [string, string];
+    status: string;
+    timeLeft: string;
     isActive: boolean;
+    iconUrl?: string;
 }
 interface CalendarCardProps {
     data: {

@@ -33,18 +33,24 @@ export interface AccountBaseInfo {
 export interface RoleData {
     roleId: number;
     roleName: string;
-    roleIconUrl: string;
+    roleIconUrl?: string | null;
+    rolePicUrl?: string | null;
     starLevel: number;
     level: number;
-    breach: number;
+    breach?: number | null;
     attributeId: number;
-    attributeName: string;
+    attributeName?: string | null;
     weaponTypeId: number;
-    chain: number[];
-    chainCount: number;
+    weaponTypeName?: string | null;
+    acronym?: string | null;
+    chainUnlockNum?: number | null;
+    isMainRole?: boolean | null;
+    totalSkillLevel?: number | null;
 }
 export interface RoleListResp {
     roleList: RoleData[];
+    showRoleIdList?: number[] | null;
+    showToGuest?: boolean;
 }
 export interface ExploreItem {
     name: string;
@@ -76,16 +82,26 @@ export interface ExploreResp {
     exploreList?: ExploreArea[] | null;
 }
 export interface SignItem {
-    id: string;
+    id?: string;
+    goodsId?: number;
     goodsName: string;
     goodsNum: number;
     goodsUrl: string;
-    sigInStatus: number;
+    sigInStatus?: number;
+    serialNum?: number;
+    isGain?: boolean;
 }
 export interface SignInitResp {
+    isSigIn?: boolean;
+    hasSignIn?: boolean;
     sigInNum: number;
-    hasSignIn: boolean;
-    sigInDTOList: SignItem[];
+    omissionNnm?: number;
+    signInGoodsConfigs?: SignItem[];
+    disposableGoodsList?: SignItem[];
+    signLoopGoodsList?: SignItem[];
+    sigInDTOList?: SignItem[];
+    eventStartTimes?: string;
+    eventEndTimes?: string;
 }
 export interface KuroRole {
     roleId: string;
@@ -208,12 +224,15 @@ export interface CalabashResp {
     }[];
 }
 export interface AnnItem {
-    id: string;
+    id: number;
     postId: string;
-    title: string;
+    postTitle: string;
     coverUrl: string;
-    publishTime: string;
-    eventType: string;
+    coverImages?: {
+        url: string;
+    }[];
+    publishTime: number;
+    eventType: number;
 }
 export interface AnnListResp {
     list: AnnItem[];
@@ -232,6 +251,41 @@ export interface RedeemCode {
     rewards: string;
     expireTime?: string;
     isExpired?: boolean;
+}
+export interface WikiGachaTab {
+    name: string;
+    countDown?: {
+        dateRange: [string, string];
+    };
+    imgs?: Array<{
+        img: string;
+        title: string;
+        linkConfig?: {
+            linkUrl: string;
+            linkType: number;
+            entryId: string;
+        };
+    }>;
+}
+export interface WikiActivityContent {
+    title: string;
+    contentUrl: string;
+    countDown?: {
+        dateRange: [string, string];
+    };
+}
+export interface WikiSideModule {
+    title: string;
+    content: unknown;
+}
+export interface WikiHomeResp {
+    contentJson: string | {
+        banner?: Array<{
+            url: string;
+            describe: string;
+        }>;
+        sideModules?: WikiSideModule[];
+    };
 }
 export interface CalcRole {
     roleId: number;
@@ -344,12 +398,9 @@ export interface OnlineRole {
 export interface OwnedRoleInfo {
     roleId: number;
     level: number;
-    breach: number;
-    skillLevelList: {
-        skillId: number;
-        level: number;
-        type: string;
-    }[];
+}
+export interface OwnedRoleInfoResp {
+    roleInfoList: OwnedRoleInfo[];
 }
 export interface CultivateCostItem {
     id: number;
@@ -389,10 +440,10 @@ export interface MoreActivityResp {
 export interface RankEntry {
     uid: string;
     roleName: string;
-    roleIconUrl: string;
+    roleIconUrl?: string | null;
     starLevel: number;
     level: number;
-    chainCount: number;
+    chainUnlockNum: number;
     attributeName: string;
     score: number;
     weaponName: string;

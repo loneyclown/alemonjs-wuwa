@@ -1,11 +1,16 @@
 import React from 'react';
-interface PoolItem {
-    title: string;
-    publishTime: string;
+interface PoolInfo {
+    poolName: string;
+    type: 'char' | 'weapon';
+    dateRange?: [string, string];
+    status: string;
+    timeLeft: string;
+    isActive: boolean;
+    items: string[];
 }
 interface PoolCardProps {
     data: {
-        pools: PoolItem[];
+        pools: PoolInfo[];
     };
 }
 export default function PoolCard({ data }: PoolCardProps): React.JSX.Element;
