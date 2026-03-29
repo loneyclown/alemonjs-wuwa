@@ -1,5 +1,5 @@
 {
-  "name": "alemonjs-wuwa",
+  "name": "alemonjs-kuro",
   "version": "1.0.0-rc.1",
   "description": "mhy-mod",
   "author": "ningmengchongshui",
@@ -63,9 +63,9 @@
     "registry": "https://registry.npmjs.org",
     "access": "public"
   },
-  "bugs": "https://github.com/xiuxianjs/alemonjs-wuwa/issues",
+  "bugs": "https://github.com/xiuxianjs/alemonjs-kuro/issues",
   "repository": {
     "type": "git",
-    "url": "https://github.com/xiuxianjs/alemonjs-wuwa.git"
+    "url": "https://github.com/xiuxianjs/alemonjs-kuro.git"
   }
 }

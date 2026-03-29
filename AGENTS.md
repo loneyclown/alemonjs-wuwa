@@ -67,12 +67,12 @@ export default async (e: EventsEnum) => {
 ## Redis Key 约定
 
 ```
-data:alemonjs-wuwa:cookie:user:{userId}          # Cookie (30d)
-data:alemonjs-wuwa:uid:user:{userId}:{game}       # UID 列表 (90d)
-data:alemonjs-wuwa:stoken:user:{userId}           # Stoken (90d)
-data:alemonjs-wuwa:device_fp:{uid}                # 设备指纹 (1h)
-data:alemonjs-wuwa:cache:{game}:{uid}:{api}       # 查询缓存 (5m)
-data:alemonjs-wuwa:qrlogin:lock:{userId}          # 扫码会话
+data:alemonjs-kuro:cookie:user:{userId}          # Cookie (30d)
+data:alemonjs-kuro:uid:user:{userId}:{game}       # UID 列表 (90d)
+data:alemonjs-kuro:stoken:user:{userId}           # Stoken (90d)
+data:alemonjs-kuro:device_fp:{uid}                # 设备指纹 (1h)
+data:alemonjs-kuro:cache:{game}:{uid}:{api}       # 查询缓存 (5m)
+data:alemonjs-kuro:qrlogin:lock:{userId}          # 扫码会话
 ```
 
 ## JSX 卡片组件规范

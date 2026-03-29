@@ -15,13 +15,13 @@
 - 地址
 
 ```sh
-https://github.com/loneyclown/alemonjs-wuwa.git
+https://github.com/loneyclown/alemonjs-kuro.git
 ```
 
 若访问受限，可使用如下加速地址
 
 ```sh
-https://ghfast.top/https://github.com/loneyclown/alemonjs-wuwa.git
+https://ghfast.top/https://github.com/loneyclown/alemonjs-kuro.git
 ```
 
 - branch
@@ -33,7 +33,7 @@ release
 ### 本地
 
 ```sh
-git clone -b release --depth=1 https://github.com/loneyclown/alemonjs-wuwa.git ./packages/alemonjs-wuwa
+git clone -b release --depth=1 https://github.com/loneyclown/alemonjs-kuro.git ./packages/alemonjs-kuro
 ```
 
 ```sh
@@ -44,20 +44,20 @@ yarn install #开始模块化
 
 ```yaml
 apps:
-  alemonjs-wuwa: true # 启动扩展
+  alemonjs-kuro: true # 启动扩展
 ```
 
 ## 安装方式2: npm
 
 ```sh
-yarn add alemonjs-wuwa -W
+yarn add alemonjs-kuro -W
 ```
 
 - alemon.config.yaml
 
 ```yaml
 apps:
-  alemonjs-wuwa: true # 启动扩展
+  alemonjs-kuro: true # 启动扩展
 ```
 
 ## 免责声明
