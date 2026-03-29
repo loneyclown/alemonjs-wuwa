@@ -1,6 +1,6 @@
 {
   "name": "alemonjs-kuro",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "mhy-mod",
   "author": "ningmengchongshui",
   "type": "module",
@@ -10,9 +10,11 @@
     "./package": "./package.json"
   },
   "dependencies": {
+    "@types/qrcode": "^1.5.6",
     "classnames": "^2.5.1",
     "jsxp": "^1.3.0",
-    "md5": "^2.3.0"
+    "md5": "^2.3.0",
+    "qrcode": "^1.5.4"
   },
   "lint-staged": {
     "*.{js,ts,tsx}": [
