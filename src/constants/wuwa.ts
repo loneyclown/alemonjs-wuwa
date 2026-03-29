@@ -47,7 +47,15 @@ export const wuwaRouteRules = {
   /** 卡池 */
   pool: new RegExp(`^${P}(卡池|当前卡池|kc)$`),
   /** 刷新面板 */
-  refresh: new RegExp(`^${P}(刷新面板|刷新)$`)
+  refresh: new RegExp(`^${P}(刷新面板|刷新)$`),
+  /** 角色培养 */
+  develop: new RegExp(`^${P}(.*)(养成|培养|yc)(.*)$`),
+  /** 激斗/牌局 */
+  poker: new RegExp(`^${P}(poker|牌局|扑克|激斗|打牌)$`),
+  /** 排行 */
+  rank: new RegExp(`^${P}(练度排行|群排行|ldph|ldpm)$`),
+  /** Wiki/攻略 */
+  wiki: new RegExp(`^${P}(.*)(wiki|攻略|gl|技能|jn|共鸣链|gml|命座|回路|机制|jz|图鉴)$`)
 } as const;
 
 // ═══════════════════════════════════════
@@ -122,6 +130,8 @@ export const KURO_API = {
   ANN_LIST: `${KURO_BASE_URL}/forum/companyEvent/findEventList`,
   /** 公告详情 */
   ANN_DETAIL: `${KURO_BASE_URL}/forum/getPostDetail`,
+  /** 角色养成 — 刷新计算器 */
+  CALC_REFRESH: `${KURO_BASE_URL}/aki/calculator/refreshData`,
   /** 角色养成 — 角色列表 */
   CALC_ROLE_LIST: `${KURO_BASE_URL}/aki/calculator/listRole`,
   /** 角色养成 — 已拥有角色 */
@@ -139,7 +149,13 @@ export const KURO_API = {
   /** 资源统计 — 版本报告 */
   PERIOD_VERSION: `${KURO_BASE_URL}/aki/resource/version`,
   /** Wiki 主页 */
-  WIKI_HOME: `${KURO_BASE_URL}/wiki/core/homepage/getPage`
+  WIKI_HOME: `${KURO_BASE_URL}/wiki/core/homepage/getPage`,
+  /** Wiki 目录树 */
+  WIKI_TREE: `${KURO_BASE_URL}/wiki/core/catalogue/config/getTree`,
+  /** Wiki 条目详情 */
+  WIKI_ENTRY_DETAIL: `${KURO_BASE_URL}/wiki/core/catalogue/item/getEntryDetail`,
+  /** 更多活动 (激斗/牌局) */
+  MORE_ACTIVITY: `${KURO_BASE_URL}/aki/roleBox/akiBox/moreActivity`
 } as const;
 
 /** 抽卡记录 API (游戏服务器) */

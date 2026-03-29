@@ -1,5 +1,7 @@
+import PoolCard from '@src/img/views/PoolCard';
 import { apiAnnList } from '@src/model/api';
 import { createEvent, EventsEnum, Format, useMessage } from 'alemonjs';
+import { renderComponentIsHtmlToBuffer } from 'jsxp';
 
 export default async (e: EventsEnum) => {
   const event = createEvent({
@@ -32,13 +34,21 @@ export default async (e: EventsEnum) => {
     return;
   }
 
-  let text = '[鸣潮] 当前卡池信息：\n';
+  const pools = poolAnnList.slice(0, 6).map(ann => ({
+    title: ann.title,
+    publishTime: ann.publishTime
+  }));
 
-  for (const ann of poolAnnList.slice(0, 6)) {
-    text += `\n📌 ${ann.title}\n   发布时间: ${ann.publishTime}\n`;
+  const img = await renderComponentIsHtmlToBuffer(PoolCard, { data: { pools } });
+
+  if (typeof img === 'boolean') {
+    md.addText('[鸣潮] 卡池信息渲染失败');
+    format.addMarkdown(md);
+    void message.send({ format });
+
+    return;
   }
 
-  md.addText(text);
-  format.addMarkdown(md);
+  format.addImage(img);
   void message.send({ format });
 };

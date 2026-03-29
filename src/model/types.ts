@@ -423,3 +423,162 @@ export interface PeriodDetailResp {
   itemList: PeriodDetailItem[];
   copyWriting?: string;
 }
+
+// ═══════════════════════════════════════
+// 角色培养计算
+// ═══════════════════════════════════════
+
+/** 在线角色列表项 (calculator) */
+export interface OnlineRole {
+  roleId: number;
+  roleName: string;
+  roleIconUrl: string;
+  starLevel: number;
+}
+
+/** 已拥有角色的状态 */
+export interface OwnedRoleInfo {
+  roleId: number;
+  level: number;
+  breach: number;
+  skillLevelList: { skillId: number; level: number; type: string }[];
+}
+
+/** 培养成本项 */
+export interface CultivateCostItem {
+  id: number;
+  name: string;
+  num: number;
+  quality: number;
+  iconUrl?: string;
+}
+
+/** 批量培养成本响应 */
+export interface BatchRoleCostResp {
+  costList: {
+    roleId: number;
+    roleName: string;
+    weaponId: number;
+    cultivateCost: CultivateCostItem[];
+  }[];
+}
+
+// ═══════════════════════════════════════
+// 持有率/激斗活动 (moreActivity)
+// ═══════════════════════════════════════
+
+/** 激斗徽章 */
+export interface PokerBadge {
+  unlock: boolean;
+  name: string;
+  description: string;
+  iconUrl?: string;
+}
+
+/** 激斗/幻象对弈数据 */
+export interface PhantomBattle {
+  level: number;
+  levelName: string;
+  exp: number;
+  expLimit: number;
+  cardNum: number;
+  maxCardNum: number;
+  badgeNum: number;
+  maxBadgeNum: number;
+  badgeList: PokerBadge[];
+}
+
+/** moreActivity 响应 */
+export interface MoreActivityResp {
+  phantomBattle: PhantomBattle | null;
+}
+
+// ═══════════════════════════════════════
+// 角色排行 (简化版 — 群内排行)
+// ═══════════════════════════════════════
+
+/** 排行条目 */
+export interface RankEntry {
+  uid: string;
+  roleName: string;
+  roleIconUrl: string;
+  starLevel: number;
+  level: number;
+  chainCount: number;
+  attributeName: string;
+  score: number;
+  weaponName: string;
+  weaponLevel: number;
+  weaponStarLevel: number;
+  resonLevel: number;
+}
+
+// ═══════════════════════════════════════
+// Wiki
+// ═══════════════════════════════════════
+
+/** Wiki 目录项 */
+export interface WikiCatalogueItem {
+  id: string;
+  name: string;
+  content?: string;
+  icon?: string;
+}
+
+/** Wiki 条目详情 */
+export interface WikiEntryDetail {
+  id: string;
+  name: string;
+  content: string;
+  icon?: string;
+}
+
+// ═══════════════════════════════════════
+// 声骸列表（完善版）
+// ═══════════════════════════════════════
+
+/** 声骸评分条目 */
+export interface EchoRankItem {
+  roleId: number;
+  roleName: string;
+  roleIconUrl: string;
+  phantomName: string;
+  phantomIconUrl: string;
+  level: number;
+  cost: number;
+  fetterName: string;
+  mainProps: { attributeName: string; attributeValue: string }[];
+  subProps: { attributeName: string; attributeValue: string }[];
+}
+
+// ═══════════════════════════════════════
+// 卡池完善 — 运气统计
+// ═══════════════════════════════════════
+
+/** 常驻角色列表 (不算UP) */
+export const NORMAL_ROLE_LIST = ['维里奈', '卡卡罗', '凌阳', '鉴心', '安可', '漂泊者·衍射', '漂泊者·湮灭'];
+
+/** 运气等级标签 */
+export const LUCK_TAGS = ['非到极致', '运气不好', '平稳保底', '小欧一把', '欧狗在此'];
+
+/** 各卡池的运气阈值 */
+export const LUCK_THRESHOLDS: Record<string, number[]> = {
+  角色精准调谐: [74, 87, 99, 105, 120],
+  武器精准调谐: [45, 52, 59, 65, 70],
+  新手调谐: [10, 20, 30, 40, 45],
+  default: [60, 75, 90, 100, 110]
+};
+
+/** 分析后的增强版卡池统计 */
+export interface GachaPoolStatEx extends GachaPoolStat {
+  avg: number | null;
+  avgUp: number | null;
+  luckLevel: number;
+  star5Items: {
+    name: string;
+    count: number;
+    time: string;
+    isUp: boolean;
+    resourceType: string;
+  }[];
+}

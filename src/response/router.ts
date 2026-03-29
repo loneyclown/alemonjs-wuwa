@@ -97,6 +97,22 @@ export default defineRouter([
       {
         regular: wuwaRouteRules.refresh,
         handler: lazy(() => import('@src/response/refresh'))
+      },
+      {
+        regular: wuwaRouteRules.develop,
+        handler: lazy(() => import('@src/response/develop'))
+      },
+      {
+        regular: wuwaRouteRules.poker,
+        handler: lazy(() => import('@src/response/poker'))
+      },
+      {
+        regular: wuwaRouteRules.rank,
+        handler: lazy(() => import('@src/response/rank'))
+      },
+      {
+        regular: wuwaRouteRules.wiki,
+        handler: lazy(() => import('@src/response/wiki'))
       }
     ]
   }

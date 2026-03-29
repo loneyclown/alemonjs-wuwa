@@ -1,8 +1,11 @@
-import CharDetailCard from '@src/img/views/CharDetailCard';
+import EchoListCard from '@src/img/views/EchoListCard';
 import { apiBaseInfo, apiRoleData, apiRoleDetail, getCookie } from '@src/model/api';
 import { getActiveUid } from '@src/model/db';
+import type { EchoRankItem } from '@src/model/types';
 import { createEvent, EventsEnum, Format, useMessage } from 'alemonjs';
 import { renderComponentIsHtmlToBuffer } from 'jsxp';
+
+const ECHOES_PER_PAGE = 20;
 
 export default async (e: EventsEnum) => {
   const event = createEvent({
@@ -28,7 +31,7 @@ export default async (e: EventsEnum) => {
   const ckResult = await getCookie(uid, userId);
 
   if (!ckResult) {
-    md.addText('[鸣潮] 未添加Token或Token已失效\n请使用 #登录 手机号,验证码 重新登录');
+    md.addText('[鸣潮] 未添加Token或Token已失效');
     format.addMarkdown(md);
     void message.send({ format });
 
@@ -37,7 +40,6 @@ export default async (e: EventsEnum) => {
 
   const { cookie } = ckResult;
 
-  // 获取角色列表，取第一个角色的声骸详情
   const [roleResp, baseResp] = await Promise.all([apiRoleData(uid, cookie), apiBaseInfo(uid, cookie)]);
 
   if (!roleResp.success || !roleResp.data?.roleList?.length) {
@@ -48,32 +50,59 @@ export default async (e: EventsEnum) => {
     return;
   }
 
-  // 默认取星级最高、等级最高的角色
-  const roles = roleResp.data.roleList.slice().sort((a, b) => b.starLevel - a.starLevel || b.level - a.level);
-  const targetRole = roles[0];
+  const playerName = baseResp.success && baseResp.data ? baseResp.data.name : '漂泊者';
 
-  // 查询角色详情（含声骸）
-  const detailResp = await apiRoleDetail(uid, cookie, targetRole.roleId);
+  // 收集所有角色的声骸
+  const allEchoes: EchoRankItem[] = [];
 
-  if (!detailResp.success || !detailResp.data) {
-    md.addText(`[鸣潮] 角色详情查询失败: ${detailResp.msg || '未知错误'}`);
-    format.addMarkdown(md);
-    void message.send({ format });
+  for (const role of roleResp.data.roleList) {
+    const detailResp = await apiRoleDetail(uid, cookie, role.roleId);
 
-    return;
+    if (!detailResp.success || !detailResp.data?.phantomData?.equipPhantomList) {
+      continue;
+    }
+
+    for (const equip of detailResp.data.phantomData.equipPhantomList) {
+      if (!equip?.phantomProp) {
+        continue;
+      }
+
+      const phantom = equip.phantomProp;
+
+      allEchoes.push({
+        roleId: role.roleId,
+        roleName: role.roleName,
+        roleIconUrl: role.roleIconUrl,
+        phantomName: phantom.name ?? '未知',
+        phantomIconUrl: phantom.icon ?? '',
+        level: phantom.level ?? 0,
+        cost: equip.cost ?? 0,
+        fetterName: phantom.fetterDetail?.name ?? '',
+        mainProps: phantom.mainProps ?? [],
+        subProps: phantom.phantomProp ?? []
+      });
+    }
   }
 
-  // 补充 base 信息到 role
-  if (baseResp.success && baseResp.data) {
-    detailResp.data.role = { ...detailResp.data.role, ...{ attributeName: detailResp.data.role.attributeName || '' } };
-  }
+  // 按 cost 降序、level 降序排序
+  allEchoes.sort((a, b) => b.cost - a.cost || b.level - a.level);
 
-  const img = await renderComponentIsHtmlToBuffer(CharDetailCard, {
-    data: { uid, detail: detailResp.data }
+  const totalPages = Math.max(1, Math.ceil(allEchoes.length / ECHOES_PER_PAGE));
+  const page = 1;
+  const pageEchoes = allEchoes.slice((page - 1) * ECHOES_PER_PAGE, page * ECHOES_PER_PAGE);
+
+  const img = await renderComponentIsHtmlToBuffer(EchoListCard, {
+    data: {
+      uid,
+      playerName,
+      echoes: pageEchoes,
+      page,
+      totalPages
+    }
   });
 
   if (typeof img === 'boolean') {
-    md.addText('[鸣潮] 声骸面板渲染失败');
+    md.addText('[鸣潮] 声骸列表渲染失败');
     format.addMarkdown(md);
     void message.send({ format });
 

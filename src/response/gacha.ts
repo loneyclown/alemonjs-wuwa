@@ -1,8 +1,8 @@
 import GachaCard from '@src/img/views/GachaCard';
 import { apiGachaLog } from '@src/model/api';
 import { getActiveUid } from '@src/model/db';
-import type { GachaLogItem, GachaPoolStat } from '@src/model/types';
-import { GACHA_POOL_TYPE } from '@src/model/types';
+import type { GachaLogItem, GachaPoolStatEx } from '@src/model/types';
+import { GACHA_POOL_TYPE, LUCK_THRESHOLDS, NORMAL_ROLE_LIST } from '@src/model/types';
 import { createEvent, EventsEnum, Format, useMessage } from 'alemonjs';
 import { renderComponentIsHtmlToBuffer } from 'jsxp';
 
@@ -37,8 +37,8 @@ async function fetchAllGacha(uid: string): Promise<GachaLogItem[]> {
   return allItems;
 }
 
-/** 分析抽卡数据生成统计 */
-function analyzeGacha(items: GachaLogItem[]): GachaPoolStat[] {
+/** 分析抽卡数据生成增强统计 */
+function analyzeGacha(items: GachaLogItem[]): GachaPoolStatEx[] {
   const poolMap = new Map<string, GachaLogItem[]>();
 
   for (const item of items) {
@@ -48,13 +48,13 @@ function analyzeGacha(items: GachaLogItem[]): GachaPoolStat[] {
     poolMap.set(item.cardPoolType, pool);
   }
 
-  const stats: GachaPoolStat[] = [];
+  const stats: GachaPoolStatEx[] = [];
 
   for (const [poolType, poolItems] of poolMap) {
     // 按时间正序排序
     poolItems.sort((a, b) => new Date(a.time).getTime() - new Date(b.time).getTime());
 
-    const star5List: { name: string; count: number; time: string }[] = [];
+    const star5Items: GachaPoolStatEx['star5Items'] = [];
     let counter = 0;
     let star4Count = 0;
     let star3Count = 0;
@@ -63,7 +63,15 @@ function analyzeGacha(items: GachaLogItem[]): GachaPoolStat[] {
       counter++;
 
       if (item.qualityLevel === 5) {
-        star5List.push({ name: item.name, count: counter, time: item.time });
+        const isUp = !NORMAL_ROLE_LIST.includes(item.name);
+
+        star5Items.push({
+          name: item.name,
+          count: counter,
+          time: item.time,
+          isUp,
+          resourceType: item.resourceType ?? '角色'
+        });
         counter = 0;
       } else if (item.qualityLevel === 4) {
         star4Count++;
@@ -72,14 +80,35 @@ function analyzeGacha(items: GachaLogItem[]): GachaPoolStat[] {
       }
     }
 
+    const poolName = GACHA_POOL_TYPE[poolType] ?? `卡池${poolType}`;
+
+    // 计算平均抽数和 UP 平均抽数
+    const avg = star5Items.length > 0 ? Math.round(poolItems.length / star5Items.length) : null;
+    const upItems = star5Items.filter(s => s.isUp);
+    const avgUp = upItems.length > 0 ? Math.round(poolItems.length / upItems.length) : null;
+
+    // 计算运气等级
+    const thresholds = LUCK_THRESHOLDS[poolName] ?? LUCK_THRESHOLDS['default'];
+    let luckLevel = 2; // 默认平稳保底
+
+    if (avg !== null && thresholds) {
+      luckLevel = thresholds.findIndex(t => avg <= t);
+
+      if (luckLevel === -1) { luckLevel = 0; } // 超出最大阈值 = 非到极致
+    }
+
     stats.push({
-      poolName: GACHA_POOL_TYPE[poolType] ?? `卡池${poolType}`,
+      poolName,
       poolType,
       total: poolItems.length,
-      star5List,
+      star5List: star5Items.map(s => ({ name: s.name, count: s.count, time: s.time })),
       star4Count,
       star3Count,
-      pity: counter
+      pity: counter,
+      avg,
+      avgUp,
+      luckLevel,
+      star5Items
     });
   }
 

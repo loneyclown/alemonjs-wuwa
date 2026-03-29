@@ -15,6 +15,7 @@ import type {
   AccountBaseInfo,
   AnnDetailResp,
   AnnListResp,
+  BatchRoleCostResp,
   CalabashResp,
   ChallengeResp,
   DailyData,
@@ -24,6 +25,9 @@ import type {
   KuroRole,
   MatrixResp,
   MineV2Resp,
+  MoreActivityResp,
+  OnlineRole,
+  OwnedRoleInfo,
   PeriodDetailResp,
   PeriodListResp,
   RoleDetailResp,
@@ -449,6 +453,100 @@ export async function apiPeriodDetail(uid: string, token: string, type: 'month' 
     serverId: getServerId(uid),
     roleId: uid,
     period
+  });
+}
+
+// ═══════════════════════════════════════
+// 培养计算 API
+// ═══════════════════════════════════════
+
+/** 刷新计算器数据 */
+export async function apiCalcRefresh(uid: string, token: string) {
+  const headers = getBaseHeaders();
+  const uh = await getUserHeaders(token, uid, true);
+
+  Object.assign(headers, uh);
+
+  return kuroPost(KURO_API.CALC_REFRESH, headers, {
+    serverId: getServerId(uid),
+    roleId: uid
+  });
+}
+
+/** 获取在线角色列表 (所有已上线角色) */
+export function apiOnlineRoleList(token: string) {
+  const headers = getBaseHeaders();
+
+  headers['token'] = token;
+
+  return kuroPost<OnlineRole[]>(KURO_API.CALC_ROLE_LIST, headers, {});
+}
+
+/** 获取已拥有角色信息 */
+export async function apiOwnedRoleInfo(uid: string, token: string) {
+  const headers = getBaseHeaders();
+  const uh = await getUserHeaders(token, uid, true);
+
+  Object.assign(headers, uh);
+
+  return kuroPost<OwnedRoleInfo[]>(KURO_API.CALC_OWNED_ROLE, headers, {
+    serverId: getServerId(uid),
+    roleId: uid
+  });
+}
+
+/** 批量计算角色培养成本 */
+export async function apiBatchRoleCost(uid: string, token: string, content: unknown[]) {
+  const headers = getBaseHeaders();
+  const uh = await getUserHeaders(token, uid, true);
+
+  Object.assign(headers, uh);
+
+  return kuroPost<BatchRoleCostResp>(KURO_API.CALC_BATCH_COST, headers, {
+    serverId: getServerId(uid),
+    roleId: uid,
+    content: JSON.stringify(content)
+  });
+}
+
+// ═══════════════════════════════════════
+// 持有率/激斗 API
+// ═══════════════════════════════════════
+
+/** 更多活动 (激斗/牌局) */
+export async function apiMoreActivity(uid: string, token: string) {
+  const headers = getBaseHeaders();
+  const uh = await getUserHeaders(token, uid);
+
+  Object.assign(headers, uh);
+
+  return kuroPost<MoreActivityResp>(KURO_API.MORE_ACTIVITY, headers, {
+    gameId: WAVES_GAME_ID,
+    serverId: getServerId(uid),
+    roleId: uid
+  });
+}
+
+// ═══════════════════════════════════════
+// Wiki API
+// ═══════════════════════════════════════
+
+/** Wiki 目录树 */
+export function apiWikiTree(catalogueId: string) {
+  const headers = getBaseHeaders();
+
+  return kuroPost<unknown>(KURO_API.WIKI_TREE, headers, {
+    gameId: WAVES_GAME_ID,
+    catalogueId
+  });
+}
+
+/** Wiki 条目详情 */
+export function apiWikiEntryDetail(entryId: string) {
+  const headers = getBaseHeaders();
+
+  return kuroPost<unknown>(KURO_API.WIKI_ENTRY_DETAIL, headers, {
+    entryId
   });
 }
 

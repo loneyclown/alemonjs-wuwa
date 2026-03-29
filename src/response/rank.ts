@@ -1,0 +1,109 @@
+import RankCard from '@src/img/views/RankCard';
+import { apiBaseInfo, apiRoleData, apiRoleDetail, getCookie } from '@src/model/api';
+import { getActiveUid } from '@src/model/db';
+import type { RankEntry, RoleData } from '@src/model/types';
+import { createEvent, EventsEnum, Format, useMessage } from 'alemonjs';
+import { renderComponentIsHtmlToBuffer } from 'jsxp';
+
+/** 计算简易练度分数 */
+function calcScore(role: RoleData): number {
+  // 基于等级、突破、共鸣链的综合打分
+  const levelScore = role.level * 1.0;
+  const breachScore = role.breach * 10;
+  const chainScore = role.chainCount * 15;
+  const starScore = role.starLevel === 5 ? 20 : 0;
+
+  return levelScore + breachScore + chainScore + starScore;
+}
+
+export default async (e: EventsEnum) => {
+  const event = createEvent({
+    event: e,
+    selects: ['message.create', 'private.message.create']
+  });
+  const [message] = useMessage(event);
+  const userId = event.UserId;
+
+  const format = Format.create();
+  const md = Format.createMarkdown();
+
+  const uid = await getActiveUid(userId);
+
+  if (!uid) {
+    md.addText('[鸣潮] 请先绑定特征码: #绑定特征码123456789');
+    format.addMarkdown(md);
+    void message.send({ format });
+
+    return;
+  }
+
+  const ckResult = await getCookie(uid, userId);
+
+  if (!ckResult) {
+    md.addText('[鸣潮] 未添加Token或Token已失效');
+    format.addMarkdown(md);
+    void message.send({ format });
+
+    return;
+  }
+
+  const { cookie } = ckResult;
+
+  const [roleResp, baseResp] = await Promise.all([apiRoleData(uid, cookie), apiBaseInfo(uid, cookie)]);
+
+  if (!roleResp.success || !roleResp.data?.roleList?.length) {
+    md.addText('[鸣潮] 角色列表为空');
+    format.addMarkdown(md);
+    void message.send({ format });
+
+    return;
+  }
+
+  // 取前 10 个最高练度角色的详情
+  const sortedRoles = roleResp.data.roleList
+    .slice()
+    .sort((a, b) => calcScore(b) - calcScore(a))
+    .slice(0, 10);
+
+  const entries: RankEntry[] = [];
+
+  for (const role of sortedRoles) {
+    const detailResp = await apiRoleDetail(uid, cookie, role.roleId);
+
+    entries.push({
+      uid,
+      roleName: role.roleName,
+      roleIconUrl: role.roleIconUrl,
+      starLevel: role.starLevel,
+      level: role.level,
+      chainCount: role.chainCount,
+      attributeName: role.attributeName,
+      score: calcScore(role),
+      weaponName: detailResp.success && detailResp.data ? (detailResp.data.weaponData?.weaponName ?? '-') : '-',
+      weaponLevel: detailResp.success && detailResp.data ? (detailResp.data.weaponData?.level ?? 0) : 0,
+      weaponStarLevel: detailResp.success && detailResp.data ? (detailResp.data.weaponData?.weaponStarLevel ?? 0) : 0,
+      resonLevel: detailResp.success && detailResp.data ? (detailResp.data.weaponData?.resonLevel ?? 0) : 0
+    });
+  }
+
+  entries.sort((a, b) => b.score - a.score);
+
+  const img = await renderComponentIsHtmlToBuffer(RankCard, {
+    data: {
+      uid,
+      playerName: baseResp.success && baseResp.data ? baseResp.data.name : '漂泊者',
+      entries
+    }
+  });
+
+  if (typeof img === 'boolean') {
+    md.addText('[鸣潮] 排行卡片渲染失败');
+    format.addMarkdown(md);
+    void message.send({ format });
+
+    return;
+  }
+
+  format.addImage(img);
+  void message.send({ format });
+};

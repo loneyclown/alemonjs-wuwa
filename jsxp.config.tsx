@@ -5,14 +5,20 @@ import ChallengeCard from '@src/img/views/ChallengeCard';
 import CharDetailCard from '@src/img/views/CharDetailCard';
 import CharlistCard from '@src/img/views/CharlistCard';
 import CoinCard from '@src/img/views/CoinCard';
+import DevelopCard from '@src/img/views/DevelopCard';
+import EchoListCard from '@src/img/views/EchoListCard';
 import ExploreCard from '@src/img/views/ExploreCard';
 import GachaCard from '@src/img/views/GachaCard';
 import WuwaHelp from '@src/img/views/Help';
 import PeriodCard from '@src/img/views/PeriodCard';
+import PokerCard from '@src/img/views/PokerCard';
+import PoolCard from '@src/img/views/PoolCard';
+import RankCard from '@src/img/views/RankCard';
 import RoleInfoCard from '@src/img/views/RoleInfoCard';
 import SignCard from '@src/img/views/SignCard';
 import StaminaCard from '@src/img/views/StaminaCard';
 import TowerCard from '@src/img/views/TowerCard';
+import WikiCard from '@src/img/views/WikiCard';
 import { defineConfig } from 'jsxp';
 import React from 'react';
 
@@ -268,8 +274,8 @@ export default defineConfig({
           data={{
             uid: '100000001',
             pools: [
-              { poolName: '角色精准调谐', poolType: '1', total: 120, star5List: [{ name: '吟霖', count: 78, time: '2026-03-01' }], star4Count: 12, star3Count: 107, pity: 42 },
-              { poolName: '武器精准调谐', poolType: '2', total: 60, star5List: [], star4Count: 6, star3Count: 54, pity: 60 }
+              { poolName: '角色精准调谐', poolType: '1', total: 120, star5List: [{ name: '吟霖', count: 78, time: '2026-03-01' }], star4Count: 12, star3Count: 107, pity: 42, avg: 78, avgUp: 78, luckLevel: 1, star5Items: [{ name: '吟霖', count: 78, time: '2026-03-01', isUp: true, resourceType: '角色' }] },
+              { poolName: '武器精准调谐', poolType: '2', total: 60, star5List: [], star4Count: 6, star3Count: 54, pity: 60, avg: null, avgUp: null, luckLevel: 2, star5Items: [] }
             ]
           }}
         />
@@ -334,6 +340,123 @@ export default defineConfig({
             periodType: 'month',
             periodTitle: '2026年3月',
             detail: { totalStar: 4800, totalCoin: 320000, coinList: [], starList: [], itemList: [] }
+          }}
+        />
+      )
+    },
+    '/develop': {
+      component: (
+        <DevelopCard
+          data={{
+            uid: '100000001',
+            roles: [
+              { roleId: 1001, roleName: '吟霖' },
+              { roleId: 1002, roleName: '安可' }
+            ],
+            costs: [
+              { id: 1, name: '割裂晶核', quality: 5, num: 12, iconUrl: '' },
+              { id: 2, name: '裂变能', quality: 4, num: 35, iconUrl: '' },
+              { id: 3, name: '贝币', quality: 3, num: 250000, iconUrl: '' }
+            ]
+          }}
+        />
+      )
+    },
+    '/poker': {
+      component: (
+        <PokerCard
+          data={{
+            uid: '100000001',
+            battle: {
+              level: 15,
+              levelName: '大师',
+              exp: 3200,
+              expLimit: 5000,
+              cardNum: 120,
+              maxCardNum: 200,
+              badgeNum: 2,
+              maxBadgeNum: 5,
+              badgeList: [
+                { name: '初入牌局', description: '完成首次对弈', unlock: true },
+                { name: '百战不殆', description: '累计胜利100场', unlock: true },
+                { name: '常胜将军', description: '连胜10场', unlock: false }
+              ]
+            },
+            base: { name: '漂泊者', id: 100000001, level: 60, worldLevel: 6, roleNum: 25, phantomNum: 300, achievementCount: 150, boxNum: 500, soundLevel: 30, bigWorldLevel: 6 }
+          }}
+        />
+      )
+    },
+    '/rank': {
+      component: (
+        <RankCard
+          data={{
+            uid: '100000001',
+            playerName: '漂泊者',
+            entries: [
+              { uid: '100000001', roleName: '吟霖', roleIconUrl: '', starLevel: 5, level: 90, chainCount: 2, attributeName: '冰', weaponName: '苍鳞千嶂', weaponStarLevel: 5, weaponLevel: 90, resonLevel: 1, score: 175 },
+              { uid: '100000001', roleName: '安可', roleIconUrl: '', starLevel: 5, level: 80, chainCount: 0, attributeName: '火', weaponName: '无妄', weaponStarLevel: 4, weaponLevel: 80, resonLevel: 1, score: 130 },
+              { uid: '100000001', roleName: '鉴心', roleIconUrl: '', starLevel: 4, level: 70, chainCount: 4, attributeName: '雷', weaponName: '千古洑流', weaponStarLevel: 3, weaponLevel: 70, resonLevel: 1, score: 120 }
+            ]
+          }}
+        />
+      )
+    },
+    '/wiki': {
+      component: (
+        <WikiCard
+          data={{
+            uid: '100000001',
+            detail: {
+              role: { roleId: 1001, roleName: '吟霖', roleIconUrl: '', starLevel: 5, level: 90, breach: 6, attributeId: 1, attributeName: '冰', weaponTypeId: 1, chain: [], chainCount: 2 },
+              level: 90,
+              chainList: [
+                { order: 1, name: '链1', iconUrl: '', unlocked: true },
+                { order: 2, name: '链2', iconUrl: '', unlocked: true },
+                { order: 3, name: '链3', iconUrl: '', unlocked: false },
+                { order: 4, name: '链4', iconUrl: '', unlocked: false },
+                { order: 5, name: '链5', iconUrl: '', unlocked: false },
+                { order: 6, name: '链6', iconUrl: '', unlocked: false }
+              ],
+              weaponData: { weaponId: 1, weaponName: '苍鳞千嶂', weaponStarLevel: 5, weaponIcon: '', weaponType: 1, level: 90, breach: 6, resonLevel: 1 },
+              phantomData: { cost: 12, equipPhantomList: [] },
+              skillList: [
+                { skillId: 1, skillName: '普通攻击·冰', iconUrl: '', level: 10, type: 'Normal' },
+                { skillId: 2, skillName: '共鸣技能·凝霜', iconUrl: '', level: 10, type: 'Skill' },
+                { skillId: 3, skillName: '共鸣解放·白霜', iconUrl: '', level: 10, type: 'Liberation' }
+              ]
+            },
+            queryType: 'skills'
+          }}
+        />
+      )
+    },
+    '/echolist': {
+      component: (
+        <EchoListCard
+          data={{
+            uid: '100000001',
+            playerName: '漂泊者',
+            echoes: [
+              { roleId: 1001, roleName: '吟霖', roleIconUrl: '', phantomName: '鸣钟之龟', phantomIconUrl: '', level: 25, cost: 4, fetterName: '凝夜白霜', mainProps: [{ attributeName: '攻击', attributeValue: '352' }], subProps: [{ attributeName: '暴击率', attributeValue: '8.4%' }, { attributeName: '暴击伤害', attributeValue: '16.8%' }] },
+              { roleId: 1002, roleName: '安可', roleIconUrl: '', phantomName: '无冠者', phantomIconUrl: '', level: 25, cost: 4, fetterName: '熔山裂谷', mainProps: [{ attributeName: '攻击', attributeValue: '352' }], subProps: [{ attributeName: '暴击率', attributeValue: '6.3%' }] },
+              { roleId: 1001, roleName: '吟霖', roleIconUrl: '', phantomName: '融火虫', phantomIconUrl: '', level: 20, cost: 3, fetterName: '凝夜白霜', mainProps: [{ attributeName: '攻击%', attributeValue: '30%' }], subProps: [] }
+            ],
+            page: 1,
+            totalPages: 1
+          }}
+        />
+      )
+    },
+    '/pool': {
+      component: (
+        <PoolCard
+          data={{
+            pools: [
+              { title: '限定角色调谐 — 吟霖', publishTime: '2026-03-20 10:00' },
+              { title: '限定武器调谐 — 苍鳞千嶂', publishTime: '2026-03-20 10:00' },
+              { title: '角色常驻调谐', publishTime: '2026-03-01 06:00' }
+            ]
           }}
         />
       )
