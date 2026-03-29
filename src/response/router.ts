@@ -43,6 +43,58 @@ export default defineRouter([
         handler: lazy(() => import('@src/response/tower'))
       },
       {
+        regular: wuwaRouteRules.challenge,
+        handler: lazy(() => import('@src/response/challenge'))
+      },
+      {
+        regular: wuwaRouteRules.slash,
+        handler: lazy(() => import('@src/response/slash'))
+      },
+      {
+        regular: wuwaRouteRules.matrix,
+        handler: lazy(() => import('@src/response/matrix'))
+      },
+      {
+        regular: wuwaRouteRules.charlist,
+        handler: lazy(() => import('@src/response/charlist'))
+      },
+      {
+        regular: wuwaRouteRules.coin,
+        handler: lazy(() => import('@src/response/coin'))
+      },
+      {
+        regular: wuwaRouteRules.announce,
+        handler: lazy(() => import('@src/response/announce'))
+      },
+      {
+        regular: wuwaRouteRules.code,
+        handler: lazy(() => import('@src/response/code'))
+      },
+      {
+        regular: wuwaRouteRules.gacha,
+        handler: lazy(() => import('@src/response/gacha'))
+      },
+      {
+        regular: wuwaRouteRules.echoList,
+        handler: lazy(() => import('@src/response/echoList'))
+      },
+      {
+        regular: wuwaRouteRules.calabash,
+        handler: lazy(() => import('@src/response/calabash'))
+      },
+      {
+        regular: wuwaRouteRules.period,
+        handler: lazy(() => import('@src/response/period'))
+      },
+      {
+        regular: wuwaRouteRules.calendar,
+        handler: lazy(() => import('@src/response/calendar'))
+      },
+      {
+        regular: wuwaRouteRules.pool,
+        handler: lazy(() => import('@src/response/pool'))
+      },
+      {
         regular: wuwaRouteRules.refresh,
         handler: lazy(() => import('@src/response/refresh'))
       }

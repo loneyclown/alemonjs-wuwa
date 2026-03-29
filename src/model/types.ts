@@ -129,17 +129,297 @@ export interface TowerFloor {
   roleList: RoleData[];
 }
 
+/** 深塔区域 */
+export interface TowerArea {
+  areaName: string;
+  floorList: TowerFloor[];
+  maxStar: number;
+  star: number;
+}
+
+/** 深塔难度 */
+export interface TowerDifficulty {
+  difficulty: number;
+  difficultyName: string;
+  towerAreaList: TowerArea[];
+}
+
 /** 深塔数据响应 */
 export interface TowerResp {
   isUnlock: boolean;
-  difficultyList: {
-    difficulty: number;
-    difficultyName: string;
-    towerAreaList: {
-      areaName: string;
-      floorList: TowerFloor[];
-      maxStar: number;
-      star: number;
-    }[];
+  difficultyList: TowerDifficulty[];
+}
+
+/** 全息战略响应 (与深塔结构相同) */
+export type ChallengeResp = TowerResp;
+
+/** 冥歌海墟响应 */
+export type SlashResp = TowerResp;
+
+/** 终焉矩阵响应 */
+export type MatrixResp = TowerResp;
+
+/** 角色详情 — 武器 */
+export interface RoleWeapon {
+  weaponId: number;
+  weaponName: string;
+  weaponStarLevel: number;
+  weaponIcon: string;
+  weaponType: number;
+  level: number;
+  breach: number;
+  resonLevel: number;
+}
+
+/** 角色详情 — 声骸属性 */
+export interface PhantomProp {
+  phantomPropId: number;
+  attributeName: string;
+  attributeValue: string;
+}
+
+/** 角色详情 — 单个声骸 */
+export interface PhantomItem {
+  phantomId: number;
+  name: string;
+  icon: string;
+  level: number;
+  cost: number;
+  mainProps: PhantomProp[];
+  phantomProp: PhantomProp[];
+  fetterDetail?: {
+    name: string;
+    fetterLevel: number;
+    rareLV?: number;
+    groupId?: number;
+  };
+}
+
+/** 角色详情 — 声骸装备槽 */
+export interface EquipPhantom {
+  phantomProp: PhantomItem | null;
+  cost: number;
+}
+
+/** 角色详情 — 技能 */
+export interface RoleSkill {
+  skillId: number;
+  skillName: string;
+  iconUrl: string;
+  level: number;
+  type: string;
+}
+
+/** 角色完整详情响应 */
+export interface RoleDetailResp {
+  role: RoleData;
+  level: number;
+  chainList: { order: number; name: string; iconUrl: string; unlocked: boolean }[];
+  weaponData: RoleWeapon;
+  phantomData: {
+    cost: number;
+    equipPhantomList: EquipPhantom[];
+  };
+  skillList: RoleSkill[];
+}
+
+/** 库洛币 — 用户信息 */
+export interface MineInfo {
+  goldNum: number;
+  userName: string;
+  userId: string;
+  headUrl: string;
+  headFrameUrl?: string;
+  signature?: string;
+}
+
+/** mineV2 响应 */
+export interface MineV2Resp {
+  mine: MineInfo;
+}
+
+/** 声骸坞（数据坞）响应 */
+export interface CalabashResp {
+  level: number;
+  baseCatch: number;
+  strengthenCatch: number;
+  catchQuality: number;
+  cost: number;
+  maxCost: number;
+  phantomList: {
+    phantomId: number;
+    name: string;
+    iconUrl: string;
+    cost: number;
+    skillDescription: string;
   }[];
+}
+
+/** 公告项 */
+export interface AnnItem {
+  id: string;
+  postId: string;
+  title: string;
+  coverUrl: string;
+  publishTime: string;
+  eventType: string;
+}
+
+/** 公告列表响应 */
+export interface AnnListResp {
+  list: AnnItem[];
+}
+
+/** 公告详情 */
+export interface AnnDetailResp {
+  postDetail: {
+    postId: string;
+    postTitle: string;
+    postContent: string;
+    publishTime: string;
+    coverUrl: string;
+  };
+}
+
+/** 兑换码项 */
+export interface RedeemCode {
+  code: string;
+  rewards: string;
+  expireTime?: string;
+  isExpired?: boolean;
+}
+
+/** 角色养成 — 角色列表项 */
+export interface CalcRole {
+  roleId: number;
+  roleName: string;
+  roleIconUrl: string;
+  starLevel: number;
+}
+
+/** 角色养成 — 培养状态 */
+export interface CultivateStatus {
+  roleLevel: number;
+  breach: number;
+  skillLevelList: { skillId: number; level: number }[];
+  weaponLevel: number;
+  weaponBreach: number;
+}
+
+/** 角色养成 — 成本项 */
+export interface CostItem {
+  id: number;
+  name: string;
+  iconUrl: string;
+  num: number;
+}
+
+// ═══════════════════════════════════════
+// 抽卡记录
+// ═══════════════════════════════════════
+
+/** 抽卡记录项 */
+export interface GachaLogItem {
+  cardPoolType: string;
+  resourceId: number;
+  qualityLevel: number;
+  resourceType: string;
+  name: string;
+  count: number;
+  time: string;
+}
+
+/** 卡池类型映射 */
+export const GACHA_POOL_TYPE: Record<string, string> = {
+  1: '角色精准调谐',
+  2: '武器精准调谐',
+  3: '角色调谐',
+  4: '武器调谐',
+  5: '新手调谐',
+  6: '新手自选唤取',
+  7: '感恩定向唤取',
+  8: '角色新旅唤取',
+  9: '武器新旅唤取'
+};
+
+/** 分析后的卡池统计 */
+export interface GachaPoolStat {
+  poolName: string;
+  poolType: string;
+  total: number;
+  star5List: { name: string; count: number; time: string }[];
+  star4Count: number;
+  star3Count: number;
+  pity: number;
+}
+
+// ═══════════════════════════════════════
+// 声骸列表
+// ═══════════════════════════════════════
+
+/** 声骸装备详情（含主副词条） */
+export interface PhantomEquipDetail {
+  phantomProp: {
+    phantomPropId: number;
+    name: string;
+    phantomId: number;
+    quality: number;
+    cost: number;
+    iconUrl: string;
+    skillDescription?: string;
+  };
+  cost: number;
+  quality: number;
+  level: number;
+  fetterDetail?: {
+    groupId: number;
+    name: string;
+    num: number;
+    firstDescription?: string;
+    secondDescription?: string;
+  };
+  mainProps?: { attributeName: string; attributeValue: string }[];
+  subProps?: { attributeName: string; attributeValue: string }[];
+}
+
+// ═══════════════════════════════════════
+// 星声统计 / 资源统计
+// ═══════════════════════════════════════
+
+/** 资源统计周期 */
+export interface PeriodItem {
+  title: string;
+  index: number;
+}
+
+/** 资源统计周期列表 */
+export interface PeriodListResp {
+  weeks: PeriodItem[];
+  months: PeriodItem[];
+  versions: PeriodItem[];
+}
+
+/** 资源明细节点 */
+export interface PeriodNode {
+  type: string;
+  num: number;
+}
+
+/** 资源明细项 */
+export interface PeriodDetailItem {
+  type: number;
+  total: number;
+  inc?: number;
+  detail: PeriodNode[];
+  copyWriting?: string;
+}
+
+/** 资源统计详情 */
+export interface PeriodDetailResp {
+  totalCoin?: number;
+  totalStar?: number;
+  coinList: PeriodNode[];
+  starList: PeriodNode[];
+  itemList: PeriodDetailItem[];
+  copyWriting?: string;
 }

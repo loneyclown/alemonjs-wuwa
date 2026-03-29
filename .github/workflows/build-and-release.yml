@@ -9,10 +9,9 @@ on:
       runner-type:
         description: '选择运行器类型'
         required: false
-        default: 'self-hosted'
+        default: 'macos-latest'
         type: choice
         options:
-          - self-hosted
           - macos-latest
           - ubuntu-latest
 
@@ -22,7 +21,7 @@ permissions:
 jobs:
   build:
     name: 构建和上传发布资产
-    runs-on: ${{ github.event.inputs.runner-type || 'self-hosted' }}
+    runs-on: ${{ github.event.inputs.runner-type || 'macos-latest' }}
 
     steps:
       - name: 结账代码

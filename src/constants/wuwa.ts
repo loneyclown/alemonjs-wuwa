@@ -19,7 +19,33 @@ export const wuwaRouteRules = {
   /** 签到 */
   sign: new RegExp(`^${P}(签到日历|签到记录|签到|qdjl|qd)$`),
   /** 深塔 */
-  tower: new RegExp(`^${P}(深塔|逆境深塔)$`),
+  tower: new RegExp(`^${P}(深塔|逆境深塔|st)$`),
+  /** 全息战略 */
+  challenge: new RegExp(`^${P}(全息|全息战略|qx)$`),
+  /** 冥歌海墟 */
+  slash: new RegExp(`^${P}(冥海|冥歌海墟|无尽|禁忌海域|hx)$`),
+  /** 终焉矩阵 */
+  matrix: new RegExp(`^${P}(矩阵|终焉矩阵|jz|奇点扩张|稳态协议)$`),
+  /** 练度统计 */
+  charlist: new RegExp(`^${P}(练度|练度统计|ld)$`),
+  /** 库洛币 */
+  coin: new RegExp(`^${P}(库洛币|库币|coin)$`),
+  /** 公告 */
+  announce: new RegExp(`^${P}(公告)(.*)?$`),
+  /** 兑换码 */
+  code: new RegExp(`^${P}(兑换码|code)$`),
+  /** 抽卡记录 */
+  gacha: new RegExp(`^${P}(抽卡记录|抽卡|ck|chou)$`),
+  /** 声骸列表 */
+  echoList: new RegExp(`^${P}(声骸列表|声骸|sg)$`),
+  /** 数据坞 */
+  calabash: new RegExp(`^${P}(数据坞|声骸坞|swu)$`),
+  /** 星声统计 */
+  period: new RegExp(`^${P}(星声|星声统计|资源统计|xx)(.*)$`),
+  /** 日历 */
+  calendar: new RegExp(`^${P}(日历|活动日历|rl)$`),
+  /** 卡池 */
+  pool: new RegExp(`^${P}(卡池|当前卡池|kc)$`),
   /** 刷新面板 */
   refresh: new RegExp(`^${P}(刷新面板|刷新)$`)
 } as const;
@@ -80,9 +106,45 @@ export const KURO_API = {
   TOWER_DETAIL: `${KURO_BASE_URL}/aki/roleBox/akiBox/towerDataDetail`,
   /** 全息战略 */
   CHALLENGE_DATA: `${KURO_BASE_URL}/aki/roleBox/akiBox/challengeDetails`,
+  /** 全息战略索引 */
+  CHALLENGE_INDEX: `${KURO_BASE_URL}/aki/roleBox/akiBox/challengeIndex`,
+  /** 冥歌海墟索引 */
+  SLASH_INDEX: `${KURO_BASE_URL}/aki/roleBox/akiBox/slashIndex`,
+  /** 冥歌海墟详情 */
+  SLASH_DETAIL: `${KURO_BASE_URL}/aki/roleBox/akiBox/slashDetail`,
+  /** 终焉矩阵索引 */
+  MATRIX_INDEX: `${KURO_BASE_URL}/aki/roleBox/akiBox/newTowerIndex`,
+  /** 终焉矩阵详情 */
+  MATRIX_DETAIL: `${KURO_BASE_URL}/aki/roleBox/akiBox/newTowerDetail`,
   /** 用户信息 */
-  MINE_V2: `${KURO_BASE_URL}/user/mineV2`
+  MINE_V2: `${KURO_BASE_URL}/user/mineV2`,
+  /** 公告列表 */
+  ANN_LIST: `${KURO_BASE_URL}/forum/companyEvent/findEventList`,
+  /** 公告详情 */
+  ANN_DETAIL: `${KURO_BASE_URL}/forum/getPostDetail`,
+  /** 角色养成 — 角色列表 */
+  CALC_ROLE_LIST: `${KURO_BASE_URL}/aki/calculator/listRole`,
+  /** 角色养成 — 已拥有角色 */
+  CALC_OWNED_ROLE: `${KURO_BASE_URL}/aki/calculator/ownedRole/roleInfo`,
+  /** 角色养成 — 培养状态 */
+  CALC_CULTIVATE: `${KURO_BASE_URL}/aki/calculator/roleCultivateStatus`,
+  /** 角色养成 — 批量计算成本 */
+  CALC_BATCH_COST: `${KURO_BASE_URL}/aki/calculator/batchRoleCost`,
+  /** 资源统计 — 周期列表 */
+  PERIOD_LIST: `${KURO_BASE_URL}/aki/resource/period/list`,
+  /** 资源统计 — 月报 */
+  PERIOD_MONTH: `${KURO_BASE_URL}/aki/resource/month`,
+  /** 资源统计 — 周报 */
+  PERIOD_WEEK: `${KURO_BASE_URL}/aki/resource/week`,
+  /** 资源统计 — 版本报告 */
+  PERIOD_VERSION: `${KURO_BASE_URL}/aki/resource/version`,
+  /** Wiki 主页 */
+  WIKI_HOME: `${KURO_BASE_URL}/wiki/core/homepage/getPage`
 } as const;
+
+/** 抽卡记录 API (游戏服务器) */
+export const GACHA_API_CN = 'https://gmserver-api.aki-game2.com/gacha/record/query';
+export const GACHA_API_NET = 'https://gmserver-api.aki-game2.net/gacha/record/query';
 
 /** 请求头常量 */
 export const KURO_VERSION = '3.0.0';

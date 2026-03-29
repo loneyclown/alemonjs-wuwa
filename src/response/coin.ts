@@ -1,6 +1,8 @@
-import { apiRefresh, getCookie } from '@src/model/api';
+import CoinCard from '@src/img/views/CoinCard';
+import { apiMineV2, getCookie } from '@src/model/api';
 import { getActiveUid } from '@src/model/db';
 import { createEvent, EventsEnum, Format, useMessage } from 'alemonjs';
+import { renderComponentIsHtmlToBuffer } from 'jsxp';
 
 export default async (e: EventsEnum) => {
   const event = createEvent({
@@ -35,14 +37,28 @@ export default async (e: EventsEnum) => {
 
   const { cookie } = ckResult;
 
-  const refreshResp = await apiRefresh(uid, cookie);
+  const resp = await apiMineV2(cookie);
 
-  if (refreshResp.success) {
-    md.addText('[鸣潮] 面板数据刷新成功');
-  } else {
-    md.addText(`[鸣潮] 面板刷新失败: ${refreshResp.msg || '未知错误'}`);
+  if (!resp.success || !resp.data) {
+    md.addText(`[鸣潮] 库洛币查询失败: ${resp.msg || '未知错误'}`);
+    format.addMarkdown(md);
+    void message.send({ format });
+
+    return;
   }
 
-  format.addMarkdown(md);
+  const img = await renderComponentIsHtmlToBuffer(CoinCard, {
+    data: { uid, mine: resp.data.mine }
+  });
+
+  if (typeof img === 'boolean') {
+    md.addText('[鸣潮] 库洛币卡片渲染失败');
+    format.addMarkdown(md);
+    void message.send({ format });
+
+    return;
+  }
+
+  format.addImage(img);
   void message.send({ format });
 };

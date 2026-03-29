@@ -1,6 +1,8 @@
-import { apiRefresh, getCookie } from '@src/model/api';
+import CalabashCard from '@src/img/views/CalabashCard';
+import { apiCalabashData, getCookie } from '@src/model/api';
 import { getActiveUid } from '@src/model/db';
 import { createEvent, EventsEnum, Format, useMessage } from 'alemonjs';
+import { renderComponentIsHtmlToBuffer } from 'jsxp';
 
 export default async (e: EventsEnum) => {
   const event = createEvent({
@@ -35,14 +37,28 @@ export default async (e: EventsEnum) => {
 
   const { cookie } = ckResult;
 
-  const refreshResp = await apiRefresh(uid, cookie);
+  const resp = await apiCalabashData(uid, cookie);
 
-  if (refreshResp.success) {
-    md.addText('[鸣潮] 面板数据刷新成功');
-  } else {
-    md.addText(`[鸣潮] 面板刷新失败: ${refreshResp.msg || '未知错误'}`);
+  if (!resp.success || !resp.data) {
+    md.addText(`[鸣潮] 数据坞查询失败: ${resp.msg || '未知错误'}`);
+    format.addMarkdown(md);
+    void message.send({ format });
+
+    return;
   }
 
-  format.addMarkdown(md);
+  const img = await renderComponentIsHtmlToBuffer(CalabashCard, {
+    data: { uid, calabash: resp.data }
+  });
+
+  if (typeof img === 'boolean') {
+    md.addText('[鸣潮] 数据坞卡片渲染失败');
+    format.addMarkdown(md);
+    void message.send({ format });
+
+    return;
+  }
+
+  format.addImage(img);
   void message.send({ format });
 };

@@ -1,7 +1,37 @@
 import { getIoRedis } from '@alemonjs/db';
-import { ANDROID_USER_AGENT, IOS_USER_AGENT, KURO_API, NET_SERVER_ID_MAP, SERVER_ID, SERVER_ID_NET, WAVES_GAME_ID } from '@src/constants/wuwa';
+import {
+  ANDROID_USER_AGENT,
+  GACHA_API_CN,
+  GACHA_API_NET,
+  IOS_USER_AGENT,
+  KURO_API,
+  NET_SERVER_ID_MAP,
+  SERVER_ID,
+  SERVER_ID_NET,
+  WAVES_GAME_ID
+} from '@src/constants/wuwa';
 import { wuwaKeys } from './keys';
-import type { AccountBaseInfo, DailyData, ExploreResp, KuroApiResp, KuroRole, RoleListResp, SignInitResp, TowerResp } from './types';
+import type {
+  AccountBaseInfo,
+  AnnDetailResp,
+  AnnListResp,
+  CalabashResp,
+  ChallengeResp,
+  DailyData,
+  ExploreResp,
+  GachaLogItem,
+  KuroApiResp,
+  KuroRole,
+  MatrixResp,
+  MineV2Resp,
+  PeriodDetailResp,
+  PeriodListResp,
+  RoleDetailResp,
+  RoleListResp,
+  SignInitResp,
+  SlashResp,
+  TowerResp
+} from './types';
 
 function randomSource(): 'ios' | 'android' {
   return Math.random() > 0.5 ? 'ios' : 'android';
@@ -91,7 +121,7 @@ async function getUserHeaders(token: string, uid: string, needToken = false): Pr
 // ═══════════════════════════════════════
 
 /** 手机验证码登录 */
-export async function apiLogin(mobile: string, code: string, did: string) {
+export function apiLogin(mobile: string, code: string, did: string) {
   const headers = getBaseHeaders();
 
   headers['devCode'] = did;
@@ -114,7 +144,7 @@ export async function apiLoginLog(uid: string, token: string) {
 }
 
 /** 获取角色列表 */
-export async function apiRoleList(token: string, did: string, gameId = WAVES_GAME_ID) {
+export function apiRoleList(token: string, did: string, gameId = WAVES_GAME_ID) {
   const headers = getBaseHeaders();
 
   headers['token'] = token;
@@ -138,7 +168,7 @@ export async function apiRefresh(uid: string, token: string) {
 }
 
 /** 请求 accessToken (刷新 bat) */
-export async function apiRequestToken(uid: string, token: string, did: string) {
+export function apiRequestToken(uid: string, token: string, did: string) {
   const headers = getBaseHeaders();
 
   headers['token'] = token;
@@ -250,6 +280,175 @@ export async function apiTowerDetail(uid: string, token: string) {
     gameId: WAVES_GAME_ID,
     serverId: getServerId(uid),
     roleId: uid
+  });
+}
+
+/** 全息战略 */
+export async function apiChallengeDetail(uid: string, token: string) {
+  const headers = getBaseHeaders();
+  const uh = await getUserHeaders(token, uid);
+
+  Object.assign(headers, uh);
+
+  return kuroPost<ChallengeResp>(KURO_API.CHALLENGE_DATA, headers, {
+    gameId: WAVES_GAME_ID,
+    serverId: getServerId(uid),
+    roleId: uid
+  });
+}
+
+/** 冥歌海墟 */
+export async function apiSlashDetail(uid: string, token: string) {
+  const headers = getBaseHeaders();
+  const uh = await getUserHeaders(token, uid);
+
+  Object.assign(headers, uh);
+
+  return kuroPost<SlashResp>(KURO_API.SLASH_DETAIL, headers, {
+    gameId: WAVES_GAME_ID,
+    serverId: getServerId(uid),
+    roleId: uid
+  });
+}
+
+/** 终焉矩阵 */
+export async function apiMatrixDetail(uid: string, token: string) {
+  const headers = getBaseHeaders();
+  const uh = await getUserHeaders(token, uid);
+
+  Object.assign(headers, uh);
+
+  return kuroPost<MatrixResp>(KURO_API.MATRIX_DETAIL, headers, {
+    gameId: WAVES_GAME_ID,
+    serverId: getServerId(uid),
+    roleId: uid
+  });
+}
+
+/** 角色详情 (含装备/声骸) */
+export async function apiRoleDetail(uid: string, token: string, roleId: number) {
+  const headers = getBaseHeaders();
+  const uh = await getUserHeaders(token, uid);
+
+  Object.assign(headers, uh);
+
+  return kuroPost<RoleDetailResp>(KURO_API.ROLE_DETAIL, headers, {
+    gameId: WAVES_GAME_ID,
+    serverId: getServerId(uid),
+    roleId: uid,
+    id: roleId
+  });
+}
+
+/** 数据坞 (声骸) */
+export async function apiCalabashData(uid: string, token: string) {
+  const headers = getBaseHeaders();
+  const uh = await getUserHeaders(token, uid);
+
+  Object.assign(headers, uh);
+
+  return kuroPost<CalabashResp>(KURO_API.CALABASH_DATA, headers, {
+    gameId: WAVES_GAME_ID,
+    serverId: getServerId(uid),
+    roleId: uid
+  });
+}
+
+/** 库洛币 / 用户信息 */
+export function apiMineV2(token: string) {
+  const headers = getBaseHeaders();
+
+  headers['token'] = token;
+
+  return kuroPost<MineV2Resp>(KURO_API.MINE_V2, headers, {});
+}
+
+/** 公告列表 */
+export function apiAnnList(eventType = '1', pageSize = 10) {
+  const headers = getBaseHeaders();
+
+  return kuroPost<AnnListResp>(KURO_API.ANN_LIST, headers, {
+    gameId: WAVES_GAME_ID,
+    eventType,
+    pageSize
+  });
+}
+
+/** 公告详情 */
+export function apiAnnDetail(postId: string) {
+  const headers = getBaseHeaders();
+
+  return kuroPost<AnnDetailResp>(KURO_API.ANN_DETAIL, headers, {
+    postId,
+    isOnlyPublisher: 1,
+    showOrderType: 2
+  });
+}
+
+/** 抽卡记录查询 (游戏服务器 API) */
+export async function apiGachaLog(uid: string, cardPoolType: string, recordId = '0') {
+  const isNet = parseInt(uid) >= 200000000;
+  const url = isNet ? GACHA_API_NET : GACHA_API_CN;
+  const serverId = getServerId(uid);
+
+  try {
+    const resp = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        playerId: uid,
+        cardPoolType,
+        serverId,
+        languageCode: 'zh-Hans',
+        recordId
+      })
+    });
+    const json = (await resp.json()) as { code: number; message: string; data: GachaLogItem[] };
+
+    return { success: json.code === 0, data: json.data ?? [], msg: json.message };
+  } catch (err) {
+    return { success: false, data: [] as GachaLogItem[], msg: String(err) };
+  }
+}
+
+/** 资源统计 — 获取周期列表 */
+export async function apiPeriodList(uid: string, token: string) {
+  const headers = getBaseHeaders();
+  const uh = await getUserHeaders(token, uid, true);
+
+  Object.assign(headers, uh);
+
+  try {
+    const resp = await fetch(`${KURO_API.PERIOD_LIST}?gameId=${WAVES_GAME_ID}&serverId=${getServerId(uid)}&roleId=${uid}`, {
+      method: 'GET',
+      headers
+    });
+    const json = (await resp.json()) as KuroApiResp<PeriodListResp>;
+
+    return { ...json, success: json.code === 0 || json.code === 200 };
+  } catch (err) {
+    return { code: -999, msg: String(err), data: null, success: false };
+  }
+}
+
+/** 资源统计 — 获取详情 (month/week/version) */
+export async function apiPeriodDetail(uid: string, token: string, type: 'month' | 'week' | 'version', period: number) {
+  const headers = getBaseHeaders();
+  const uh = await getUserHeaders(token, uid, true);
+
+  Object.assign(headers, uh);
+
+  const urlMap = {
+    month: KURO_API.PERIOD_MONTH,
+    week: KURO_API.PERIOD_WEEK,
+    version: KURO_API.PERIOD_VERSION
+  };
+
+  return kuroPost<PeriodDetailResp>(urlMap[type], headers, {
+    gameId: WAVES_GAME_ID,
+    serverId: getServerId(uid),
+    roleId: uid,
+    period
   });
 }
 

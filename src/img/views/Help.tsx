@@ -9,18 +9,29 @@ import IMG_ITEM from '@src/assets/img/help/texture2d/item.png';
 
 /* ═══ 指令图标 ═══ */
 import ICON_STAMINA from '@src/assets/img/help/icons/体力.png';
+import ICON_CODE from '@src/assets/img/help/icons/兑换码.png';
+import ICON_CHALLENGE from '@src/assets/img/help/icons/全息战略.png';
+import ICON_ANN from '@src/assets/img/help/icons/公告.png';
+import ICON_SLASH from '@src/assets/img/help/icons/冥歌海墟.png';
 import ICON_SWITCH from '@src/assets/img/help/icons/切换.png';
 import ICON_DELETE from '@src/assets/img/help/icons/删除.png';
 import ICON_DEL_TOKEN from '@src/assets/img/help/icons/删除token.png';
+import ICON_POOL from '@src/assets/img/help/icons/卡池.png';
 import ICON_CARD from '@src/assets/img/help/icons/基本信息卡片.png';
+import ICON_COIN from '@src/assets/img/help/icons/库洛币.png';
+import ICON_GACHA from '@src/assets/img/help/icons/抽卡记录.png';
+import ICON_CALENDAR from '@src/assets/img/help/icons/日历.png';
 import ICON_VIEW from '@src/assets/img/help/icons/查看或刷新特征码列表.png';
+import ICON_ECHO from '@src/assets/img/help/icons/查询声骸列表.png';
 import ICON_EXPLORE from '@src/assets/img/help/icons/查询探索度.png';
 import ICON_ROLEINFO from '@src/assets/img/help/icons/查询角色面板.png';
 import ICON_TOWER from '@src/assets/img/help/icons/深塔.png';
 import ICON_ADD_TOKEN from '@src/assets/img/help/icons/添加token.png';
 import ICON_LOGIN from '@src/assets/img/help/icons/登录.png';
+import ICON_MATRIX from '@src/assets/img/help/icons/矩阵.png';
 import ICON_SIGN from '@src/assets/img/help/icons/签到.png';
 import ICON_SIGN_CAL from '@src/assets/img/help/icons/签到日历.png';
+import ICON_CHARLIST from '@src/assets/img/help/icons/练度.png';
 import ICON_BIND from '@src/assets/img/help/icons/绑定.png';
 import ICON_GET_TOKEN from '@src/assets/img/help/icons/获取绑定的token.png';
 import ICON_GENERAL from '@src/assets/img/help/icons/通用.png';
@@ -76,7 +87,22 @@ const HELP_DATA: HelpCategory[] = [
   {
     title: '深塔查询',
     desc: '深塔数据查询',
-    items: [{ icon: ICON_TOWER, name: '深塔', desc: '查询逆境深塔', eg: 'st/深塔', needCk: true }]
+    items: [
+      { icon: ICON_TOWER, name: '深塔', desc: '查询逆境深塔', eg: 'st/深塔', needCk: true },
+      { icon: ICON_CHALLENGE, name: '全息战略', desc: '查询全息战略', eg: '全息战略', needCk: true },
+      { icon: ICON_SLASH, name: '冥歌海墟', desc: '查询冥歌海墟', eg: '冥歌海墟/海墟', needCk: true },
+      { icon: ICON_MATRIX, name: '终焉矩阵', desc: '查询终焉矩阵', eg: '终焉矩阵/矩阵', needCk: true }
+    ]
+  },
+  {
+    title: '数据统计',
+    desc: '角色与资源数据',
+    items: [
+      { icon: ICON_CHARLIST, name: '练度统计', desc: '查看角色练度列表', eg: '练度', needCk: true },
+      { icon: ICON_COIN, name: '库洛币', desc: '查询库洛币余额', eg: '库洛币', needCk: true },
+      { icon: ICON_ECHO, name: '声骸列表', desc: '查询声骸数据', eg: '声骸列表', needCk: true },
+      { icon: ICON_GACHA, name: '抽卡记录', desc: '查询抽卡记录', eg: '抽卡记录', needCk: true }
+    ]
   },
   {
     title: '社区功能',
@@ -84,6 +110,10 @@ const HELP_DATA: HelpCategory[] = [
     items: [
       { icon: ICON_SIGN, name: '签到', desc: '执行库街区每日签到', eg: '签到', needCk: true },
       { icon: ICON_SIGN_CAL, name: '签到日历', desc: '查看签到日历和奖励', eg: '签到日历', needCk: true },
+      { icon: ICON_ANN, name: '公告', desc: '查看游戏公告', eg: '公告' },
+      { icon: ICON_CODE, name: '兑换码', desc: '查看可用兑换码', eg: '兑换码' },
+      { icon: ICON_CALENDAR, name: '日历', desc: '查看活动日历', eg: '日历' },
+      { icon: ICON_POOL, name: '卡池', desc: '查看当前卡池信息', eg: '卡池' },
       { icon: ICON_GENERAL, name: '帮助', desc: '查看帮助列表', eg: '帮助' }
     ]
   }

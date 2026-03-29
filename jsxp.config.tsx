@@ -1,5 +1,14 @@
+import AnnCard from '@src/img/views/AnnCard';
+import CalabashCard from '@src/img/views/CalabashCard';
+import CalendarCard from '@src/img/views/CalendarCard';
+import ChallengeCard from '@src/img/views/ChallengeCard';
+import CharDetailCard from '@src/img/views/CharDetailCard';
+import CharlistCard from '@src/img/views/CharlistCard';
+import CoinCard from '@src/img/views/CoinCard';
 import ExploreCard from '@src/img/views/ExploreCard';
+import GachaCard from '@src/img/views/GachaCard';
 import WuwaHelp from '@src/img/views/Help';
+import PeriodCard from '@src/img/views/PeriodCard';
 import RoleInfoCard from '@src/img/views/RoleInfoCard';
 import SignCard from '@src/img/views/SignCard';
 import StaminaCard from '@src/img/views/StaminaCard';
@@ -167,6 +176,164 @@ export default defineConfig({
                 }
               ]
             }
+          }}
+        />
+      )
+    },
+    '/challenge': {
+      component: (
+        <ChallengeCard
+          data={{
+            uid: '100000001',
+            base: { name: '漂泊者', id: 100000001, level: 60, worldLevel: 6, roleNum: 25, phantomNum: 300, achievementCount: 150, boxNum: 500, soundLevel: 30, bigWorldLevel: 6 },
+            challenge: {
+              isUnlock: true,
+              difficultyList: [
+                {
+                  difficulty: 1,
+                  difficultyName: '常规挑战',
+                  towerAreaList: [
+                    {
+                      areaName: '挑战一',
+                      maxStar: 9,
+                      star: 7,
+                      floorList: [
+                        { floorName: '第1关', star: 3, maxStar: 3, roleList: [] },
+                        { floorName: '第2关', star: 3, maxStar: 3, roleList: [] },
+                        { floorName: '第3关', star: 1, maxStar: 3, roleList: [] }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            title: '全息战略',
+            icon: '🔮'
+          }}
+        />
+      )
+    },
+    '/charlist': {
+      component: (
+        <CharlistCard
+          data={{
+            uid: '100000001',
+            base: { name: '漂泊者', id: 100000001, level: 60, worldLevel: 6, roleNum: 5, phantomNum: 300, achievementCount: 150, boxNum: 500, soundLevel: 30, bigWorldLevel: 6 },
+            roles: [
+              { roleId: 1001, roleName: '吟霖', roleIconUrl: '', starLevel: 5, level: 90, breach: 6, attributeId: 1, attributeName: '冰', weaponTypeId: 1, chain: [], chainCount: 2 },
+              { roleId: 1002, roleName: '安可', roleIconUrl: '', starLevel: 5, level: 80, breach: 5, attributeId: 2, attributeName: '火', weaponTypeId: 2, chain: [], chainCount: 0 },
+              { roleId: 1003, roleName: '鉴心', roleIconUrl: '', starLevel: 4, level: 70, breach: 4, attributeId: 3, attributeName: '雷', weaponTypeId: 1, chain: [], chainCount: 4 },
+              { roleId: 1004, roleName: '维里奈', roleIconUrl: '', starLevel: 5, level: 90, breach: 6, attributeId: 4, attributeName: '光', weaponTypeId: 3, chain: [], chainCount: 1 },
+              { roleId: 1005, roleName: '散华', roleIconUrl: '', starLevel: 4, level: 60, breach: 3, attributeId: 5, attributeName: '风', weaponTypeId: 2, chain: [], chainCount: 6 }
+            ]
+          }}
+        />
+      )
+    },
+    '/coin': {
+      component: (
+        <CoinCard
+          data={{
+            uid: '100000001',
+            mine: {
+              goldNum: 12580,
+              userName: '漂泊者',
+              userId: '10000001',
+              headUrl: '',
+              signature: '鸣潮，启动！'
+            }
+          }}
+        />
+      )
+    },
+    '/announce': {
+      component: (
+        <AnnCard
+          data={{
+            activities: [
+              { id: '1', postId: '1', title: '2.3版本「涌潮纪行」活动公告', coverUrl: '', publishTime: '2026-03-25 10:00', eventType: '1' },
+              { id: '2', postId: '2', title: '限时角色祈愿活动「浮声掠影」开启', coverUrl: '', publishTime: '2026-03-24 10:00', eventType: '1' }
+            ],
+            notices: [
+              { id: '3', postId: '3', title: '《鸣潮》2.3版本更新公告', coverUrl: '', publishTime: '2026-03-20 06:00', eventType: '3' },
+              { id: '4', postId: '4', title: '3月28日停服维护公告', coverUrl: '', publishTime: '2026-03-27 18:00', eventType: '3' }
+            ]
+          }}
+        />
+      )
+    },
+    '/gacha': {
+      component: (
+        <GachaCard
+          data={{
+            uid: '100000001',
+            pools: [
+              { poolName: '角色精准调谐', poolType: '1', total: 120, star5List: [{ name: '吟霖', count: 78, time: '2026-03-01' }], star4Count: 12, star3Count: 107, pity: 42 },
+              { poolName: '武器精准调谐', poolType: '2', total: 60, star5List: [], star4Count: 6, star3Count: 54, pity: 60 }
+            ]
+          }}
+        />
+      )
+    },
+    '/chardetail': {
+      component: (
+        <CharDetailCard
+          data={{
+            uid: '100000001',
+            detail: {
+              role: { roleId: 1001, roleName: '吟霖', roleIconUrl: '', starLevel: 5, level: 90, breach: 6, attributeId: 1, attributeName: '冰', weaponTypeId: 1, chain: [], chainCount: 2 },
+              level: 90,
+              chainList: [
+                { order: 1, name: '链1', iconUrl: '', unlocked: true },
+                { order: 2, name: '链2', iconUrl: '', unlocked: true },
+                { order: 3, name: '链3', iconUrl: '', unlocked: false },
+                { order: 4, name: '链4', iconUrl: '', unlocked: false },
+                { order: 5, name: '链5', iconUrl: '', unlocked: false },
+                { order: 6, name: '链6', iconUrl: '', unlocked: false }
+              ],
+              weaponData: { weaponId: 1, weaponName: '苍鳞千嶂', weaponStarLevel: 5, weaponIcon: '', weaponType: 1, level: 90, breach: 6, resonLevel: 1 },
+              phantomData: { cost: 12, equipPhantomList: [] },
+              skillList: [
+                { skillId: 1, skillName: '普通攻击', iconUrl: '', level: 10, type: 'Normal' },
+                { skillId: 2, skillName: '共鸣技能', iconUrl: '', level: 10, type: 'Skill' },
+                { skillId: 3, skillName: '共鸣解放', iconUrl: '', level: 10, type: 'Liberation' }
+              ]
+            }
+          }}
+        />
+      )
+    },
+    '/calabash': {
+      component: (
+        <CalabashCard
+          data={{
+            uid: '100000001',
+            calabash: { level: 16, baseCatch: 100, strengthenCatch: 50, catchQuality: 5, cost: 12, maxCost: 12, phantomList: [] }
+          }}
+        />
+      )
+    },
+    '/calendar': {
+      component: (
+        <CalendarCard
+          data={{
+            events: [
+              { title: '限时角色调谐 — 吟霖', startTime: '2026-03-20', endTime: '2026-04-10', type: 'gacha', isActive: true },
+              { title: '「浮光掠影」活动', startTime: '2026-03-22', endTime: '2026-04-05', type: 'activity', isActive: true },
+              { title: '逆境深塔 S4赛季', startTime: '2026-04-01', endTime: '2026-04-28', type: 'tower', isActive: false }
+            ]
+          }}
+        />
+      )
+    },
+    '/period': {
+      component: (
+        <PeriodCard
+          data={{
+            uid: '100000001',
+            periodType: 'month',
+            periodTitle: '2026年3月',
+            detail: { totalStar: 4800, totalCoin: 320000, coinList: [], starList: [], itemList: [] }
           }}
         />
       )
