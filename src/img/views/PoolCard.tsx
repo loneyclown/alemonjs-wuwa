@@ -14,14 +14,13 @@ interface PoolCardProps {
 
 export default function PoolCard({ data }: PoolCardProps) {
   return (
-    <HTML>
+    <HTML style={{ minWidth: '480px' }}>
       <div
         style={{
           padding: '24px',
           fontFamily: '"tttgbnumber", system-ui, sans-serif',
           background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)',
-          color: '#ffffff',
-          minWidth: '480px'
+          color: '#ffffff'
         }}
       >
         {/* 头部 */}

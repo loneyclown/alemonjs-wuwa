@@ -46,12 +46,11 @@ export default function StaminaCard({ data }: StaminaCardProps) {
   const livenessPct = Math.min(100, Math.round((livenessCur / livenessTotal) * 100));
 
   return (
-    <HTML>
+    <HTML style={{ minWidth: '420px' }}>
       <div
         style={{
           padding: '24px',
-          background: 'linear-gradient(180deg, #1a1b2e 0%, #252642 100%)',
-          minWidth: '420px'
+          background: 'linear-gradient(180deg, #1a1b2e 0%, #252642 100%)'
         }}
       >
         {/* 头部 */}

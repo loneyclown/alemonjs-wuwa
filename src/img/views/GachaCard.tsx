@@ -20,14 +20,13 @@ const LUCK_COLORS = ['#ff4444', '#ff8a80', '#b0bec5', '#81c784', '#ffd54f'];
 
 export default function GachaCard({ data }: GachaCardProps) {
   return (
-    <HTML>
+    <HTML style={{ minWidth: '520px' }}>
       <div
         style={{
           padding: '24px',
           fontFamily: '"tttgbnumber", system-ui, sans-serif',
           background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)',
-          color: '#ffffff',
-          minWidth: '520px'
+          color: '#ffffff'
         }}
       >
         {/* 头部 */}

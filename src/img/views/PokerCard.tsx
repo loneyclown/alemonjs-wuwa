@@ -17,14 +17,13 @@ export default function PokerCard({ data }: PokerCardProps) {
   const badgePercent = battle.maxBadgeNum > 0 ? Math.min(100, (battle.badgeNum / battle.maxBadgeNum) * 100) : 0;
 
   return (
-    <HTML>
+    <HTML style={{ minWidth: '480px' }}>
       <div
         style={{
           padding: '24px',
           fontFamily: '"tttgbnumber", system-ui, sans-serif',
           background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)',
-          color: '#ffffff',
-          minWidth: '480px'
+          color: '#ffffff'
         }}
       >
         {/* 头部 */}

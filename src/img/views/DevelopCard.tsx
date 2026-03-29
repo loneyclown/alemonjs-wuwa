@@ -28,14 +28,13 @@ const QUALITY_BG: Record<number, string> = {
 
 export default function DevelopCard({ data }: DevelopCardProps) {
   return (
-    <HTML>
+    <HTML style={{ minWidth: '560px' }}>
       <div
         style={{
           padding: '24px',
           fontFamily: '"tttgbnumber", system-ui, sans-serif',
           background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)',
-          color: '#ffffff',
-          minWidth: '560px'
+          color: '#ffffff'
         }}
       >
         {/* 头部 */}

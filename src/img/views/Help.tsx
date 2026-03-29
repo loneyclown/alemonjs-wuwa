@@ -140,10 +140,9 @@ const TOTAL_W = COLUMNS * ITEM_W + (COLUMNS - 1) * ITEM_GAP + CONTENT_PAD * 2;
 
 export default function WuwaHelp() {
   return (
-    <HTML>
+    <HTML style={{ width: `${TOTAL_W}px` }}>
       <div
         style={{
-          width: `${TOTAL_W}px`,
           fontFamily: '"tttgbnumber", system-ui, sans-serif',
           fontSize: '16px',
           color: '#ffffff',

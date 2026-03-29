@@ -30,12 +30,11 @@ export default function ExploreCard({ data }: ExploreCardProps) {
   const areas = explore.exploreList || [];
 
   return (
-    <HTML>
+    <HTML style={{ minWidth: '460px' }}>
       <div
         style={{
           padding: '24px',
-          background: 'linear-gradient(180deg, #1a1b2e 0%, #252642 100%)',
-          minWidth: '460px'
+          background: 'linear-gradient(180deg, #1a1b2e 0%, #252642 100%)'
         }}
       >
         {/* 头部 */}

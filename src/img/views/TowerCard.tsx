@@ -15,12 +15,11 @@ export default function TowerCard({ data }: TowerCardProps) {
 
   if (!tower.isUnlock) {
     return (
-      <HTML>
+      <HTML style={{ minWidth: '420px' }}>
         <div
           style={{
             padding: '24px',
-            background: 'linear-gradient(180deg, #1a1b2e 0%, #252642 100%)',
-            minWidth: '420px'
+            background: 'linear-gradient(180deg, #1a1b2e 0%, #252642 100%)'
           }}
         >
           <div
@@ -44,12 +43,11 @@ export default function TowerCard({ data }: TowerCardProps) {
   const difficulties = tower.difficultyList || [];
 
   return (
-    <HTML>
+    <HTML style={{ minWidth: '480px' }}>
       <div
         style={{
           padding: '24px',
-          background: 'linear-gradient(180deg, #1a1b2e 0%, #252642 100%)',
-          minWidth: '480px'
+          background: 'linear-gradient(180deg, #1a1b2e 0%, #252642 100%)'
         }}
       >
         {/* 头部 */}

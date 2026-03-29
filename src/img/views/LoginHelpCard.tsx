@@ -33,10 +33,9 @@ interface Props {
 
 export default function LoginHelpCard({ data }: Props) {
   return (
-    <HTML>
+    <HTML style={{ width: '480px' }}>
       <div
         style={{
-          width: '480px',
           fontFamily: '"tttgbnumber", system-ui, sans-serif',
           color: '#ffffff',
           backgroundImage: `url(${IMG_BG})`,

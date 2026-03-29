@@ -42,12 +42,11 @@ export default function CharlistCard({ data }: CharlistCardProps) {
   const star4 = sorted.filter(r => r.starLevel === 4);
 
   return (
-    <HTML>
+    <HTML style={{ minWidth: '680px' }}>
       <div
         style={{
           padding: '24px',
-          background: 'linear-gradient(180deg, #1a1b2e 0%, #252642 100%)',
-          minWidth: '680px'
+          background: 'linear-gradient(180deg, #1a1b2e 0%, #252642 100%)'
         }}
       >
         {/* 头部 */}

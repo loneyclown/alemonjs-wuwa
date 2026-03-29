@@ -30,12 +30,11 @@ export default function RoleInfoCard({ data }: RoleInfoCardProps) {
   const sortedRoles = [...roles].sort((a, b) => b.starLevel - a.starLevel || b.level - a.level);
 
   return (
-    <HTML>
+    <HTML style={{ minWidth: '480px' }}>
       <div
         style={{
           padding: '24px',
-          background: 'linear-gradient(180deg, #1a1b2e 0%, #252642 100%)',
-          minWidth: '480px'
+          background: 'linear-gradient(180deg, #1a1b2e 0%, #252642 100%)'
         }}
       >
         {/* 头部 */}
