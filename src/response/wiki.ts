@@ -3,7 +3,6 @@ import { apiRoleData, getCookie } from '@src/model/api';
 import { getActiveUid } from '@src/model/db';
 import { createEvent, EventsEnum, Format, useMessage } from 'alemonjs';
 import { renderComponentIsHtmlToBuffer } from 'jsxp';
-import { withHandler } from '@src/model/handler';
 
 /** 从消息文本中提取角色名和查询类型 */
 function parseWikiQuery(text: string): { charName: string; queryType: string } {
@@ -42,7 +41,7 @@ function parseWikiQuery(text: string): { charName: string; queryType: string } {
   return { charName, queryType };
 }
 
-export default withHandler(async (e: EventsEnum) => {
+export default async (e: EventsEnum) => {
   const event = createEvent({
     event: e,
     selects: ['private.message.create', 'message.create', 'interaction.create', 'private.interaction.create']
@@ -137,4 +136,4 @@ export default withHandler(async (e: EventsEnum) => {
 
   format.addImage(img);
   void message.send({ format });
-});
+};

@@ -3,9 +3,8 @@ import { apiBaseInfo, apiMoreActivity, getCookie } from '@src/model/api';
 import { getActiveUid } from '@src/model/db';
 import { createEvent, EventsEnum, Format, useMessage } from 'alemonjs';
 import { renderComponentIsHtmlToBuffer } from 'jsxp';
-import { withHandler } from '@src/model/handler';
 
-export default withHandler(async (e: EventsEnum) => {
+export default async (e: EventsEnum) => {
   const event = createEvent({
     event: e,
     selects: ['private.message.create', 'message.create', 'interaction.create', 'private.interaction.create']
@@ -66,4 +65,4 @@ export default withHandler(async (e: EventsEnum) => {
 
   format.addImage(img);
   void message.send({ format });
-});
+};

@@ -1,8 +1,7 @@
 import { addToken, deleteToken, getActiveUid, getUserByUid } from '@src/model/db';
 import { createEvent, EventsEnum, Format, useMessage } from 'alemonjs';
-import { withHandler } from '@src/model/handler';
 
-export default withHandler(async (e: EventsEnum) => {
+export default async (e: EventsEnum) => {
   const event = createEvent({
     event: e,
     selects: ['private.message.create', 'message.create', 'interaction.create', 'private.interaction.create']
@@ -116,4 +115,4 @@ export default withHandler(async (e: EventsEnum) => {
   md.addText('[鸣潮] Token指令:\n#mc添加token <token>\n#mc删除token <uid>\n#mc获取token');
   format.addMarkdown(md);
   void message.send({ format });
-});
+};

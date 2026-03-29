@@ -1,7 +1,6 @@
 import GachaCard from '@src/img/views/GachaCard';
 import { apiGachaLog } from '@src/model/api';
 import { getActiveUid } from '@src/model/db';
-import { withHandler } from '@src/model/handler';
 import type { GachaLogItem, GachaPoolStatEx } from '@src/model/types';
 import { GACHA_POOL_TYPE, LUCK_THRESHOLDS, NORMAL_ROLE_LIST } from '@src/model/types';
 import { createEvent, EventsEnum, Format, useMessage } from 'alemonjs';
@@ -121,7 +120,7 @@ function analyzeGacha(items: GachaLogItem[]): GachaPoolStatEx[] {
   return stats;
 }
 
-export default withHandler(async (e: EventsEnum) => {
+export default async (e: EventsEnum) => {
   const event = createEvent({
     event: e,
     selects: ['private.message.create', 'message.create', 'interaction.create', 'private.interaction.create']
@@ -178,4 +177,4 @@ export default withHandler(async (e: EventsEnum) => {
 
   fmt2.addImage(img);
   void message.send({ format: fmt2 });
-});
+};

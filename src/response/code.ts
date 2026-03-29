@@ -1,10 +1,9 @@
 import type { RedeemCode } from '@src/model/types';
 import { createEvent, EventsEnum, Format, useMessage } from 'alemonjs';
-import { withHandler } from '@src/model/handler';
 
 const CODE_URL = 'https://wiki.kurobbs.com/mc/home/activity';
 
-export default withHandler(async (e: EventsEnum) => {
+export default async (e: EventsEnum) => {
   const event = createEvent({
     event: e,
     selects: ['private.message.create', 'message.create', 'interaction.create', 'private.interaction.create']
@@ -56,4 +55,4 @@ export default withHandler(async (e: EventsEnum) => {
   md.addText(text);
   format.addMarkdown(md);
   void message.send({ format });
-});
+};

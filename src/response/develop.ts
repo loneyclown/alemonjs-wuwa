@@ -4,7 +4,6 @@ import { getActiveUid } from '@src/model/db';
 import type { CultivateCostItem } from '@src/model/types';
 import { createEvent, EventsEnum, Format, useMessage } from 'alemonjs';
 import { renderComponentIsHtmlToBuffer } from 'jsxp';
-import { withHandler } from '@src/model/handler';
 
 /** 技能类型顺序 */
 const SKILL_ORDER = ['常态攻击', '共鸣技能', '共鸣解放', '变奏技能', '共鸣回路'];
@@ -12,7 +11,7 @@ const SKILL_ORDER = ['常态攻击', '共鸣技能', '共鸣解放', '变奏技�
 /** 技能突破列表 */
 const SKILL_BREAK_LIST = ['2-1', '2-2', '2-3', '2-4', '2-5', '3-1', '3-2', '3-3', '3-4', '3-5'];
 
-export default withHandler(async (e: EventsEnum) => {
+export default async (e: EventsEnum) => {
   const event = createEvent({
     event: e,
     selects: ['private.message.create', 'message.create', 'interaction.create', 'private.interaction.create']
@@ -145,4 +144,4 @@ export default withHandler(async (e: EventsEnum) => {
 
   format.addImage(img);
   void message.send({ format });
-});
+};

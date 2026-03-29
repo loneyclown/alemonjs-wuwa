@@ -4,7 +4,6 @@ import { getActiveUid } from '@src/model/db';
 import type { RankEntry, RoleData } from '@src/model/types';
 import { createEvent, EventsEnum, Format, useMessage } from 'alemonjs';
 import { renderComponentIsHtmlToBuffer } from 'jsxp';
-import { withHandler } from '@src/model/handler';
 
 /** 计算简易练度分数 */
 function calcScore(role: RoleData): number {
@@ -17,7 +16,7 @@ function calcScore(role: RoleData): number {
   return levelScore + breachScore + chainScore + starScore;
 }
 
-export default withHandler(async (e: EventsEnum) => {
+export default async (e: EventsEnum) => {
   const event = createEvent({
     event: e,
     selects: ['private.message.create', 'message.create', 'interaction.create', 'private.interaction.create']
@@ -107,4 +106,4 @@ export default withHandler(async (e: EventsEnum) => {
 
   format.addImage(img);
   void message.send({ format });
-});
+};

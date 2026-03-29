@@ -2,7 +2,6 @@ import { WAVES_GAME_ID } from '@src/constants/kuro';
 import { apiLogin, apiRequestToken, apiRoleList } from '@src/model/api';
 import { addToken, bindUid } from '@src/model/db';
 import { createEvent, EventsEnum, Format, useMessage } from 'alemonjs';
-import { withHandler } from '@src/model/handler';
 
 function generateUUID(): string {
   const chars = 'abcdef0123456789';
@@ -19,7 +18,7 @@ function generateUUID(): string {
   return result.toUpperCase();
 }
 
-export default withHandler(async (e: EventsEnum) => {
+export default async (e: EventsEnum) => {
   const event = createEvent({
     event: e,
     selects: ['private.message.create', 'message.create', 'interaction.create', 'private.interaction.create']
@@ -115,4 +114,4 @@ export default withHandler(async (e: EventsEnum) => {
   md.addText(`[鸣潮] 登录成功!\n特征码: ${uid}\n服务器: ${role.serverName || '未知'}\nToken 已保存`);
   format.addMarkdown(md);
   void message.send({ format });
-});
+};
