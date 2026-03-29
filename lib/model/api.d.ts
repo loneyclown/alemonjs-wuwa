@@ -1,4 +1,4 @@
-import type { AccountBaseInfo, AnnDetailResp, AnnListResp, CalabashResp, DailyData, ExploreResp, GachaLogItem, KuroApiResp, KuroRole, MineV2Resp, PeriodDetailResp, PeriodListResp, RoleDetailResp, RoleListResp, SignInitResp, TowerResp } from './types';
+import type { AccountBaseInfo, AnnDetailResp, AnnListResp, BatchRoleCostResp, CalabashResp, DailyData, ExploreResp, GachaLogItem, KuroApiResp, KuroRole, MineV2Resp, MoreActivityResp, OnlineRole, OwnedRoleInfo, PeriodDetailResp, PeriodListResp, RoleDetailResp, RoleListResp, SignInitResp, TowerResp } from './types';
 export declare function apiLogin(mobile: string, code: string, did: string): Promise<KuroApiResp<{
     token: string;
 }>>;
@@ -35,6 +35,13 @@ export declare function apiPeriodList(uid: string, token: string): Promise<{
     data: PeriodListResp | null;
 }>;
 export declare function apiPeriodDetail(uid: string, token: string, type: 'month' | 'week' | 'version', period: number): Promise<KuroApiResp<PeriodDetailResp>>;
+export declare function apiCalcRefresh(uid: string, token: string): Promise<KuroApiResp<unknown>>;
+export declare function apiOnlineRoleList(token: string): Promise<KuroApiResp<OnlineRole[]>>;
+export declare function apiOwnedRoleInfo(uid: string, token: string): Promise<KuroApiResp<OwnedRoleInfo[]>>;
+export declare function apiBatchRoleCost(uid: string, token: string, content: unknown[]): Promise<KuroApiResp<BatchRoleCostResp>>;
+export declare function apiMoreActivity(uid: string, token: string): Promise<KuroApiResp<MoreActivityResp>>;
+export declare function apiWikiTree(catalogueId: string): Promise<KuroApiResp<unknown>>;
+export declare function apiWikiEntryDetail(entryId: string): Promise<KuroApiResp<unknown>>;
 export declare function getSelfCookie(uid: string, _userId: string): Promise<string | null>;
 export declare function getCookie(uid: string, userId: string): Promise<{
     isSelf: boolean;

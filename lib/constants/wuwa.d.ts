@@ -22,6 +22,10 @@ export declare const wuwaRouteRules: {
     readonly calendar: RegExp;
     readonly pool: RegExp;
     readonly refresh: RegExp;
+    readonly develop: RegExp;
+    readonly poker: RegExp;
+    readonly rank: RegExp;
+    readonly wiki: RegExp;
 };
 export declare const WAVES_GAME_ID = 3;
 export declare const SERVER_ID = "76402e5b20be2c39f095a152090afddc";
@@ -53,6 +57,7 @@ export declare const KURO_API: {
     readonly MINE_V2: "https://api.kurobbs.com/user/mineV2";
     readonly ANN_LIST: "https://api.kurobbs.com/forum/companyEvent/findEventList";
     readonly ANN_DETAIL: "https://api.kurobbs.com/forum/getPostDetail";
+    readonly CALC_REFRESH: "https://api.kurobbs.com/aki/calculator/refreshData";
     readonly CALC_ROLE_LIST: "https://api.kurobbs.com/aki/calculator/listRole";
     readonly CALC_OWNED_ROLE: "https://api.kurobbs.com/aki/calculator/ownedRole/roleInfo";
     readonly CALC_CULTIVATE: "https://api.kurobbs.com/aki/calculator/roleCultivateStatus";
@@ -62,6 +67,9 @@ export declare const KURO_API: {
     readonly PERIOD_WEEK: "https://api.kurobbs.com/aki/resource/week";
     readonly PERIOD_VERSION: "https://api.kurobbs.com/aki/resource/version";
     readonly WIKI_HOME: "https://api.kurobbs.com/wiki/core/homepage/getPage";
+    readonly WIKI_TREE: "https://api.kurobbs.com/wiki/core/catalogue/config/getTree";
+    readonly WIKI_ENTRY_DETAIL: "https://api.kurobbs.com/wiki/core/catalogue/item/getEntryDetail";
+    readonly MORE_ACTIVITY: "https://api.kurobbs.com/aki/roleBox/akiBox/moreActivity";
 };
 export declare const GACHA_API_CN = "https://gmserver-api.aki-game2.com/gacha/record/query";
 export declare const GACHA_API_NET = "https://gmserver-api.aki-game2.net/gacha/record/query";

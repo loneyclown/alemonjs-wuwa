@@ -318,3 +318,113 @@ export interface PeriodDetailResp {
     itemList: PeriodDetailItem[];
     copyWriting?: string;
 }
+export interface OnlineRole {
+    roleId: number;
+    roleName: string;
+    roleIconUrl: string;
+    starLevel: number;
+}
+export interface OwnedRoleInfo {
+    roleId: number;
+    level: number;
+    breach: number;
+    skillLevelList: {
+        skillId: number;
+        level: number;
+        type: string;
+    }[];
+}
+export interface CultivateCostItem {
+    id: number;
+    name: string;
+    num: number;
+    quality: number;
+    iconUrl?: string;
+}
+export interface BatchRoleCostResp {
+    costList: {
+        roleId: number;
+        roleName: string;
+        weaponId: number;
+        cultivateCost: CultivateCostItem[];
+    }[];
+}
+export interface PokerBadge {
+    unlock: boolean;
+    name: string;
+    description: string;
+    iconUrl?: string;
+}
+export interface PhantomBattle {
+    level: number;
+    levelName: string;
+    exp: number;
+    expLimit: number;
+    cardNum: number;
+    maxCardNum: number;
+    badgeNum: number;
+    maxBadgeNum: number;
+    badgeList: PokerBadge[];
+}
+export interface MoreActivityResp {
+    phantomBattle: PhantomBattle | null;
+}
+export interface RankEntry {
+    uid: string;
+    roleName: string;
+    roleIconUrl: string;
+    starLevel: number;
+    level: number;
+    chainCount: number;
+    attributeName: string;
+    score: number;
+    weaponName: string;
+    weaponLevel: number;
+    weaponStarLevel: number;
+    resonLevel: number;
+}
+export interface WikiCatalogueItem {
+    id: string;
+    name: string;
+    content?: string;
+    icon?: string;
+}
+export interface WikiEntryDetail {
+    id: string;
+    name: string;
+    content: string;
+    icon?: string;
+}
+export interface EchoRankItem {
+    roleId: number;
+    roleName: string;
+    roleIconUrl: string;
+    phantomName: string;
+    phantomIconUrl: string;
+    level: number;
+    cost: number;
+    fetterName: string;
+    mainProps: {
+        attributeName: string;
+        attributeValue: string;
+    }[];
+    subProps: {
+        attributeName: string;
+        attributeValue: string;
+    }[];
+}
+export declare const NORMAL_ROLE_LIST: string[];
+export declare const LUCK_TAGS: string[];
+export declare const LUCK_THRESHOLDS: Record<string, number[]>;
+export interface GachaPoolStatEx extends GachaPoolStat {
+    avg: number | null;
+    avgUp: number | null;
+    luckLevel: number;
+    star5Items: {
+        name: string;
+        count: number;
+        time: string;
+        isUp: boolean;
+        resourceType: string;
+    }[];
+}
