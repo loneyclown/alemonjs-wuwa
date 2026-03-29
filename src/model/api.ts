@@ -575,17 +575,32 @@ export async function getSelfCookie(uid: string, _userId: string): Promise<strin
       return null;
     }
 
-    // 校验
+    // 校验登录状态
     const logResp = await apiLoginLog(uid, user.cookie);
 
     if (!logResp.success) {
-      return null;
+      // code 220 = Token 真正过期
+      if (logResp.code === 220) {
+        return null;
+      }
+
+      // 服务器维护，跳过验证
+      if (logResp.code === 999 || logResp.msg?.includes('维护')) {
+        return user.cookie;
+      }
+
+      // 其他错误 (网络/限流等)，不代表 Token 失效，继续尝试
     }
 
-    // 刷新
+    // 刷新数据
     const refreshResp = await apiRefresh(uid, user.cookie);
 
     if (!refreshResp.success) {
+      // 服务器维护，跳过刷新
+      if (refreshResp.code === 999 || refreshResp.msg?.includes('维护')) {
+        return user.cookie;
+      }
+
       // bat 失效 => 尝试刷新
       if (refreshResp.code === 10903 && user.did) {
         const tokenResp = await apiRequestToken(uid, user.cookie, user.did);
@@ -596,6 +611,11 @@ export async function getSelfCookie(uid: string, _userId: string): Promise<strin
 
           return user.cookie;
         }
+      }
+
+      // 非 Token 过期的刷新失败，乐观返回 cookie，让实际查询决定是否可用
+      if (refreshResp.code !== 220) {
+        return user.cookie;
       }
 
       return null;

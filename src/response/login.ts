@@ -1,7 +1,9 @@
 import { WAVES_GAME_ID } from '@src/constants/kuro';
+import LoginHelpCard, { generateQrDataUrl } from '@src/img/views/LoginHelpCard';
 import { apiLogin, apiRequestToken, apiRoleList } from '@src/model/api';
 import { addToken, bindUid } from '@src/model/db';
 import { createEvent, EventsEnum, Format, useMessage } from 'alemonjs';
+import { renderComponentIsHtmlToBuffer } from 'jsxp';
 
 function generateUUID(): string {
   const chars = 'abcdef0123456789';
@@ -30,9 +32,20 @@ export default async (e: EventsEnum) => {
   const format = Format.create();
   const md = Format.createMarkdown();
 
-  // 无参数 → 提示
+  // 无参数 → 发送登录帮助图片
   if (!text) {
-    md.addText('[鸣潮] 登录方式:\n#mc登录 手机号,验证码\n\n请先在库街区APP获取短信验证码后使用此命令');
+    const qrDataUrl = await generateQrDataUrl();
+    const img = await renderComponentIsHtmlToBuffer(LoginHelpCard, { data: { qrDataUrl } });
+
+    if (img && typeof img !== 'boolean') {
+      format.addImage(img);
+      void message.send({ format });
+
+      return;
+    }
+
+    // 图片渲染失败则回退文字
+    md.addText('[鸣潮] 登录方式:\n#mc登录 手机号 验证码\n\n请先在库街区APP获取短信验证码后使用此命令');
     format.addMarkdown(md);
     void message.send({ format });
 
@@ -40,17 +53,17 @@ export default async (e: EventsEnum) => {
   }
 
   // 手机号+验证码
-  const normalized = text.replace('，', ',');
+  const parts = text.split(/\s+/);
 
-  if (!normalized.includes(',')) {
-    md.addText('[鸣潮] 格式错误，请使用:\n#mc登录 手机号,验证码');
+  if (parts.length !== 2) {
+    md.addText('[鸣潮] 格式错误，请使用:\n#mc登录 手机号 验证码');
     format.addMarkdown(md);
     void message.send({ format });
 
     return;
   }
 
-  const [phone, code] = normalized.split(',').map(s => s.trim());
+  const [phone, code] = parts;
 
   if (!/^1[3-9]\d{9}$/.test(phone)) {
     md.addText('[鸣潮] 手机号格式错误');
