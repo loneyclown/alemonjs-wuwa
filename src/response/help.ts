@@ -1,4 +1,4 @@
-import MihoyoHelp, { MHY_TOTAL_PAGES } from '@src/img/views/MihoyoHelp';
+import MihoyoHelp, { MHY_TOTAL_PAGES } from '@src/img/views/Help';
 import { createEvent, EventsEnum, Format, useMessage } from 'alemonjs';
 import { renderComponentIsHtmlToBuffer } from 'jsxp';
 

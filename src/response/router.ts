@@ -1,4 +1,4 @@
-import { mihoyoRouteRules } from '@src/constants/mihoyo';
+import { mihoyoRouteRules } from '@src/constants/wuwa';
 import { defineRouter, lazy } from 'alemonjs';
 
 export default defineRouter([
