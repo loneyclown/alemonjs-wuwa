@@ -2,13 +2,9 @@
 
 必要环境 `nodejs` 、`redis` 、`chrome`
 
-该扩展推荐使用`alemongo`或`alemondesk`作为生产环境
-
 `alemongo` https://github.com/lemonade-lab/alemongo
 
 `alemondesk` https://github.com/lemonade-lab/alemondesk
-
-## 安装方式1: Git
 
 ### alemongo/alemondesk
 
@@ -29,29 +25,6 @@ https://ghfast.top/https://github.com/loneyclown/alemonjs-kuro.git
 ```sh
 release
 ```
-
-### 本地
-
-```sh
-git clone -b release --depth=1 https://github.com/loneyclown/alemonjs-kuro.git ./packages/alemonjs-kuro
-```
-
-```sh
-yarn install #开始模块化
-```
-
-- alemon.config.yaml
-
-```yaml
-apps:
-  alemonjs-kuro: true # 启动扩展
-```
-
-<!-- ## 安装方式2: npm
-
-```sh
-yarn add alemonjs-kuro -W
-``` -->
 
 - alemon.config.yaml
 
